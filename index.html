@@ -682,16 +682,155 @@
       width: 100%;
     }
     .metric-card {
+      position: relative;
       min-width: 0;
       max-width: 100%;
       overflow: hidden;
       padding: 1.35rem;
       border-radius: var(--radius-card-sm);
-      background: rgba(255, 255, 255, 0.04);
-      border: 1px solid rgba(255, 255, 255, 0.09);
+      background: linear-gradient(155deg, rgba(255, 255, 255, 0.055), rgba(255, 255, 255, 0.025));
+      border: 1px solid rgba(255, 255, 255, 0.1);
       display: flex;
       flex-direction: column;
       gap: 1rem;
+      transition: border-color 0.28s ease, transform 0.28s ease;
+      --mx: 50%; --my: 50%;
+    }
+    .metric-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(360px circle at var(--mx) var(--my), rgba(207, 128, 71, 0.14), transparent 62%);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      pointer-events: none;
+    }
+    .metric-card:hover { border-color: rgba(207, 128, 71, 0.35); }
+    .metric-card:hover::before { opacity: 1; }
+    .metric-card > * { position: relative; z-index: 1; }
+
+    .live-pulse {
+      display: inline-block;
+      width: 0.42rem;
+      height: 0.42rem;
+      border-radius: 9999px;
+      background: #4ade80;
+      margin-right: 0.35rem;
+      box-shadow: 0 0 0 0 rgba(74, 222, 128, 0.7);
+      animation: livePulse 2s infinite;
+    }
+    @keyframes livePulse {
+      0%   { box-shadow: 0 0 0 0 rgba(74, 222, 128, 0.65); }
+      70%  { box-shadow: 0 0 0 7px rgba(74, 222, 128, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(74, 222, 128, 0); }
+    }
+
+    .mini-pills {
+      display: inline-flex;
+      flex-wrap: wrap;
+      gap: 0.25rem;
+      padding: 0.2rem;
+      border-radius: var(--radius-pill);
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .mini-pill {
+      padding: 0.25rem 0.65rem;
+      border-radius: var(--radius-pill);
+      font-family: var(--font-mono);
+      font-size: 0.66rem;
+      color: rgba(255, 255, 255, 0.62);
+      transition: background-color 0.2s ease, color 0.2s ease;
+    }
+    .mini-pill:hover { color: #ffffff; }
+    .mini-pill.is-active { background: var(--accent); color: #ffffff; }
+
+    .spark-box {
+      position: relative;
+      height: 7.2rem;
+      border-radius: 0.85rem;
+      background: rgba(255, 255, 255, 0.025);
+      border: 1px solid rgba(255, 255, 255, 0.07);
+      padding: 0.65rem 0.65rem 0.45rem;
+      overflow: hidden;
+      cursor: crosshair;
+      touch-action: pan-y;
+    }
+    .spark-tooltip {
+      position: absolute;
+      top: 0.45rem;
+      left: 0.65rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.65rem;
+      padding: 0.25rem 0.6rem;
+      border-radius: 0.5rem;
+      background: rgba(10, 10, 10, 0.85);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      font-family: var(--font-mono);
+      font-size: 0.66rem;
+      color: rgba(255, 255, 255, 0.88);
+      pointer-events: none;
+    }
+    .spark-tooltip__accent { color: var(--accent-from); font-weight: 600; }
+    .spark-tooltip__blue { color: #93c5fd; font-weight: 600; }
+
+    /* Realtime GA4 Per-Minute Bars */
+    .ga-bars {
+      display: grid;
+      grid-template-columns: repeat(20, 1fr);
+      align-items: end;
+      gap: 0.22rem;
+      height: 3.1rem;
+      padding: 0.45rem 0.5rem 0.25rem;
+      border-radius: 0.75rem;
+      background: rgba(255, 255, 255, 0.025);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+    }
+    .ga-bar {
+      width: 100%;
+      border-radius: 2px 2px 0 0;
+      background: linear-gradient(180deg, var(--accent-from), rgba(177, 95, 44, 0.45));
+      transition: height 0.55s cubic-bezier(0.22, 1, 0.36, 1), filter 0.2s ease;
+    }
+    .ga-bar:hover { filter: brightness(1.35); }
+
+    .geo-row {
+      cursor: pointer;
+      padding: 0.25rem 0.35rem;
+      border-radius: 0.45rem;
+      transition: background-color 0.2s ease;
+    }
+    .geo-row:hover, .geo-row.is-highlighted { background: rgba(207, 128, 71, 0.12); }
+    .geo-row__fill { transition: width 0.85s cubic-bezier(0.22, 1, 0.36, 1); }
+
+    .rev-table tbody tr {
+      transition: background-color 0.2s ease;
+      cursor: pointer;
+    }
+    .rev-table tbody tr:hover:not(.rev-total),
+    .rev-table tbody tr.is-highlighted {
+      background: rgba(207, 128, 71, 0.14);
+    }
+    .rev-share-wrap {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 0.45rem;
+    }
+    .rev-share-bar {
+      width: 3rem;
+      height: 0.32rem;
+      border-radius: 99px;
+      background: rgba(255, 255, 255, 0.08);
+      overflow: hidden;
+      display: none;
+    }
+    @media (min-width: 640px) { .rev-share-bar { display: inline-block; } }
+    .rev-share-fill {
+      height: 100%;
+      border-radius: 99px;
+      background: linear-gradient(90deg, var(--accent-from), var(--accent));
     }
     .metric-card--full { grid-column: 1 / -1; }
     .metric-card__head {
@@ -712,10 +851,6 @@
     .metric-kpi__val { font-size: 1.45rem; font-weight: 600; font-variant-numeric: tabular-nums; }
     .metric-kpi__sub { font-size: 0.74rem; color: rgba(255, 255, 255, 0.5); margin-top: 0.15rem; }
 
-    .spark-box {
-      height: 5.5rem; border-radius: 0.75rem; background: rgba(255, 255, 255, 0.025);
-      border: 1px solid rgba(255, 255, 255, 0.06); padding: 0.5rem; overflow: hidden;
-    }
     .spark-box svg { width: 100%; height: 100%; }
 
     .geo-bars { display: flex; flex-direction: column; gap: 0.6rem; }
@@ -977,12 +1112,22 @@
 
     @media (min-width: 1024px) {
       .primary-nav { display: block; }
-      .hero-content {
-        display: grid; min-height: 100lvh;
-        grid-template-columns: repeat(12, 1fr); align-content: center;
-        gap: 2.5rem; padding: 8.5rem 2rem 6.5rem;
+      .hero {
+        min-height: 100svh;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
       }
-      .hero-left { grid-column: span 7; gap: 1.85rem; }
+      .hero-content {
+        display: grid;
+        flex: 1;
+        grid-template-columns: repeat(12, 1fr);
+        align-content: center;
+        gap: 2.25rem;
+        padding: 5.5rem 2rem 8.25rem;
+      }
+      .hero-watermark { bottom: 3.4rem; }
+      .hero-left { grid-column: span 7; gap: 1.35rem; }
       .hero-eyebrow { font-size: 1rem; }
       .hero-title { font-size: 4.5rem; }
       .hero-rating-text { font-size: 1rem; }
@@ -993,7 +1138,7 @@
       .canvas-modes { padding: 0.35rem; }
       .canvas-mode-label { font-size: 0.72rem; }
       .canvas-mode-btn { font-size: 0.82rem; padding: 0.38rem 0.85rem; }
-      .hero-right { grid-column: span 5; align-items: flex-end; justify-content: center; gap: 1.65rem; }
+      .hero-right { grid-column: span 5; align-items: flex-end; justify-content: center; gap: 1.15rem; }
       .hero-card, .arch-terminal, .partners { width: 25.5rem; max-width: 25.5rem; }
       .hero-card { padding: 0.65rem; }
       .hero-card__tile { width: 7rem; }
@@ -1177,9 +1322,125 @@
     @media (max-width: 379px) {
       .partners__grid { grid-template-columns: repeat(2, 1fr); }
     }
+
+    /* ========================================
+       PC INTERACTIVE MAGNETIC DOT-GRID BACKGROUND
+       ======================================== */
+    .page-bg-canvas {
+      display: none;
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      pointer-events: none;
+    }
+    @media (min-width: 1024px) and (hover: hover) and (pointer: fine) {
+      .page-bg-canvas { display: block; }
+      main, footer { position: relative; z-index: 1; }
+      .about, .create-band, .portfolio, .services, .stats-section {
+        background: transparent;
+      }
+    }
+
+    /* ========================================
+       INTERACTIVE BAT-SIGNAL MODE
+       ======================================== */
+    .bat-toggle-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 2.35rem;
+      height: 2.35rem;
+      border: 1px solid rgba(230, 229, 226, 0.85);
+      background: rgba(255, 255, 255, 0.55);
+      backdrop-filter: blur(8px);
+      border-radius: var(--radius-control);
+      color: var(--foreground);
+      transition: background-color 0.22s ease, color 0.22s ease, border-color 0.22s ease, transform 0.22s ease;
+    }
+    .bat-toggle-btn:hover {
+      background: var(--ink);
+      border-color: var(--ink);
+      color: #f5c542;
+      transform: scale(1.05);
+    }
+    .bat-toggle-btn.is-active {
+      background: var(--ink);
+      border-color: #f5c542;
+      color: #f5c542;
+      box-shadow: 0 0 14px rgba(245, 197, 66, 0.45);
+    }
+    .bat-toggle-btn svg { width: 1.25rem; height: 1.25rem; }
+
+    .bat-canvas {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 98;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.45s ease;
+    }
+    .bat-canvas.is-active { opacity: 1; }
+
+    .bat-pill {
+      position: fixed;
+      bottom: 1.35rem;
+      left: 50%;
+      transform: translateX(-50%) translateY(1.25rem);
+      z-index: 105;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.5rem 0.55rem 0.5rem 1rem;
+      border-radius: var(--radius-pill);
+      background: rgba(10, 10, 12, 0.9);
+      color: #f5f5f5;
+      border: 1px solid rgba(245, 197, 66, 0.42);
+      box-shadow: 0 14px 36px rgba(0, 0, 0, 0.45), 0 0 24px rgba(245, 197, 66, 0.16);
+      backdrop-filter: blur(14px);
+      font-size: 0.76rem;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.35s ease, transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+      max-width: calc(100vw - 1.5rem);
+    }
+    .bat-pill.is-active {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateX(-50%) translateY(0);
+    }
+    .bat-pill__icon { color: #f5c542; width: 1.15rem; height: 1.15rem; flex-shrink: 0; }
+    .bat-pill__text { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .bat-pill__text strong { color: #f5c542; font-weight: 600; }
+    .bat-pill__exit {
+      padding: 0.32rem 0.75rem;
+      border-radius: var(--radius-pill);
+      background: rgba(245, 197, 66, 0.16);
+      color: #f5c542;
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      flex-shrink: 0;
+      transition: background-color 0.2s ease, color 0.2s ease;
+    }
+    .bat-pill__exit:hover { background: #f5c542; color: #0a0a0a; }
   </style>
 </head>
 <body>
+  <canvas id="pageBgCanvas" class="page-bg-canvas" aria-hidden="true"></canvas>
+  <canvas id="batSignalCanvas" class="bat-canvas" aria-hidden="true"></canvas>
+  <div id="batPill" class="bat-pill" role="region" aria-label="Bat-Signal controls">
+    <svg class="bat-pill__icon" viewBox="0 0 64 32" fill="currentColor" aria-hidden="true">
+      <path d="M32 3c1.6 0 2.6 2.8 3.1 4.5 1.1-1.3 2.1-3.1 3.4-3.1 0 3.4-.4 5.9 1.6 6.7 3.8 1.5 9.8-.6 13.7-4.7 2.8 4.4 6.1 7.6 8.2 8.7-5.9.8-10.3 3.9-12.5 8.6-3.7-2.4-7.9-1.9-10.4 1.3-2.5-2.8-5.1-3.4-7.1 3.9-2-7.3-4.6-6.7-7.1-3.9-2.5-3.2-6.7-3.7-10.4-1.3C12.3 19 7.9 15.9 2 15.1c2.1-1.1 5.4-4.3 8.2-8.7 3.9 4.1 9.9 6.2 13.7 4.7 2-.8 1.6-3.3 1.6-6.7 1.3 0 2.3 1.8 3.4 3.1C29.4 5.8 30.4 3 32 3Z"/>
+    </svg>
+    <span class="bat-pill__text"><strong>Bat-Signal</strong> &middot; Aim cursor &amp; click for bats</span>
+    <button type="button" id="batExitBtn" class="bat-pill__exit">Exit</button>
+  </div>
   <a href="#main" class="skip-link">Skip to content</a>
 
   <!-- SCROLL PROGRESS BAR -->
@@ -1254,6 +1515,11 @@
           <span class="clock-chip__sep" aria-hidden="true">•</span>
           <span id="liveDate" class="clock-chip__date">21 November, 2026</span>
         </div>
+        <button type="button" id="batToggleBtn" class="bat-toggle-btn" title="Activate Bat-Signal (Key: B)" aria-label="Toggle Bat-Signal interactive mode" aria-pressed="false">
+          <svg viewBox="0 0 64 32" fill="currentColor" aria-hidden="true">
+            <path d="M32 3c1.6 0 2.6 2.8 3.1 4.5 1.1-1.3 2.1-3.1 3.4-3.1 0 3.4-.4 5.9 1.6 6.7 3.8 1.5 9.8-.6 13.7-4.7 2.8 4.4 6.1 7.6 8.2 8.7-5.9.8-10.3 3.9-12.5 8.6-3.7-2.4-7.9-1.9-10.4 1.3-2.5-2.8-5.1-3.4-7.1 3.9-2-7.3-4.6-6.7-7.1-3.9-2.5-3.2-6.7-3.7-10.4-1.3C12.3 19 7.9 15.9 2 15.1c2.1-1.1 5.4-4.3 8.2-8.7 3.9 4.1 9.9 6.2 13.7 4.7 2-.8 1.6-3.3 1.6-6.7 1.3 0 2.3 1.8 3.4 3.1C29.4 5.8 30.4 3 32 3Z"/>
+          </svg>
+        </button>
         <button type="button" id="openMenuBtn" class="menu-btn" aria-label="Open navigation menu" aria-expanded="false">
           <span class="menu-btn__inner" data-spring-hover="scale:1.05;t:320;f:18">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -1928,14 +2194,18 @@
               <button type="button" class="cred-tab" role="tab" aria-selected="false" data-cred-tab="int">Interests &amp; Focus</button>
             </div>
 
-            <!-- TAB 1: VERIFIED GSC, ANALYTICS & ADSENSE -->
+            <!-- TAB 1: VERIFIED GSC, ANALYTICS & ADSENSE (INTERACTIVE) -->
             <div id="credPane-traction" class="cred-pane is-active" role="tabpanel">
               <div class="traction-grid">
-                <!-- Google Search Console -->
-                <div class="metric-card">
+                <!-- Interactive Google Search Console -->
+                <div class="metric-card" data-spotlight>
                   <div class="metric-card__head">
                     <span class="metric-card__label">Google Search Console</span>
-                    <span class="metric-card__badge">Page-1 Avg: 8.6</span>
+                    <div class="mini-pills" role="group" aria-label="Toggle GSC chart metric">
+                      <button type="button" class="mini-pill is-active" data-gsc-mode="both">Both</button>
+                      <button type="button" class="mini-pill" data-gsc-mode="impr">Impr.</button>
+                      <button type="button" class="mini-pill" data-gsc-mode="clicks">Clicks</button>
+                    </div>
                   </div>
                   <div class="metric-kpis">
                     <div>
@@ -1955,19 +2225,30 @@
                       <div class="metric-kpi__sub">Avg CTR</div>
                     </div>
                   </div>
-                  <div class="spark-box" aria-hidden="true">
-                    <svg viewBox="0 0 360 72" fill="none">
-                      <path d="M4 66 L14 48 L22 65 L48 64 L78 58 L112 52 L138 34 L152 12 L166 44 L182 14 L194 42 L202 18 L216 54 L246 58 L274 44 L302 28 L322 60 L344 54 L356 64" stroke="#cf8047" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                      <path d="M4 66 L14 48 L22 65 L48 64 L78 58 L112 52 L138 34 L152 12 L166 44 L182 14 L194 42 L202 18 L216 54 L246 58 L274 44 L302 28 L322 60 L344 54 L356 64 V72 H4 Z" fill="rgba(207,128,71,0.14)"/>
+                  <div id="gscChartBox" class="spark-box" title="Hover or scrub across chart to inspect milestones">
+                    <div id="gscTooltip" class="spark-tooltip">
+                      <span id="gscDate">Peak &middot; May 2026</span>
+                      <span id="gscValImpr" class="spark-tooltip__accent">2.7K impr</span>
+                      <span id="gscValClicks" class="spark-tooltip__blue">14 clicks</span>
+                    </div>
+                    <svg id="gscSvg" viewBox="0 0 360 90" fill="none" preserveAspectRatio="none">
+                      <line x1="0" y1="28" x2="360" y2="28" stroke="rgba(255,255,255,0.06)" stroke-dasharray="3 4"/>
+                      <line x1="0" y1="58" x2="360" y2="58" stroke="rgba(255,255,255,0.06)" stroke-dasharray="3 4"/>
+                      <path id="gscAreaImpr" d="" fill="rgba(207,128,71,0.16)"/>
+                      <path id="gscLineImpr" d="" stroke="#cf8047" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"/>
+                      <path id="gscLineClicks" d="" stroke="#93c5fd" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" opacity="0.88"/>
+                      <line id="gscCursorLine" x1="180" y1="16" x2="180" y2="88" stroke="rgba(255,255,255,0.35)" stroke-dasharray="2 3"/>
+                      <circle id="gscDotImpr" cx="180" cy="30" r="4" fill="#cf8047" stroke="#0a0a0a" stroke-width="1.5"/>
+                      <circle id="gscDotClicks" cx="180" cy="40" r="3.5" fill="#93c5fd" stroke="#0a0a0a" stroke-width="1.5"/>
                     </svg>
                   </div>
                 </div>
 
-                <!-- Realtime Global Analytics -->
-                <div class="metric-card">
+                <!-- Interactive Realtime Global Analytics -->
+                <div class="metric-card" data-spotlight>
                   <div class="metric-card__head">
-                    <span class="metric-card__label">Google Analytics &middot; Global Traffic</span>
-                    <span class="metric-card__badge">65 Live / 30m</span>
+                    <span class="metric-card__label">Google Analytics &middot; Global</span>
+                    <span class="metric-card__badge"><span class="live-pulse" aria-hidden="true"></span>65 Live / 30m</span>
                   </div>
                   <div class="metric-kpis">
                     <div>
@@ -1979,23 +2260,24 @@
                       <div class="metric-kpi__sub">Daily Sessions</div>
                     </div>
                   </div>
+                  <div id="gaMinuteBars" class="ga-bars" aria-label="Active users per minute activity"></div>
                   <div class="geo-bars">
-                    <div class="geo-row">
+                    <div class="geo-row" data-country-sync="United States" tabindex="0" role="button">
                       <span class="geo-row__name">United States</span>
                       <div class="geo-row__track"><div class="geo-row__fill" style="width:100%"></div></div>
                       <span class="geo-row__val">51</span>
                     </div>
-                    <div class="geo-row">
+                    <div class="geo-row" data-country-sync="Canada" tabindex="0" role="button">
                       <span class="geo-row__name">Canada</span>
                       <div class="geo-row__track"><div class="geo-row__fill" style="width:18%"></div></div>
                       <span class="geo-row__val">9</span>
                     </div>
-                    <div class="geo-row">
+                    <div class="geo-row" data-country-sync="Australia" tabindex="0" role="button">
                       <span class="geo-row__name">Australia</span>
                       <div class="geo-row__track"><div class="geo-row__fill" style="width:6%"></div></div>
                       <span class="geo-row__val">2</span>
                     </div>
-                    <div class="geo-row">
+                    <div class="geo-row" data-country-sync="Argentina" tabindex="0" role="button">
                       <span class="geo-row__name">Argentina</span>
                       <div class="geo-row__track"><div class="geo-row__fill" style="width:3%"></div></div>
                       <span class="geo-row__val">1</span>
@@ -2003,11 +2285,16 @@
                   </div>
                 </div>
 
-                <!-- Website AdSense Revenue Breakdown -->
-                <div class="metric-card metric-card--full">
+                <!-- Interactive Sortable AdSense Revenue Breakdown -->
+                <div class="metric-card metric-card--full" data-spotlight>
                   <div class="metric-card__head">
-                    <span class="metric-card__label">Website AdSense Revenue by Country</span>
-                    <span class="metric-card__badge">57.19% Viewable &middot; 651 Clicks</span>
+                    <span class="metric-card__label">Website AdSense Revenue &middot; 57.19% Viewable</span>
+                    <div class="mini-pills" role="group" aria-label="Sort revenue table">
+                      <button type="button" class="mini-pill is-active" data-rev-sort="earnings">Earnings</button>
+                      <button type="button" class="mini-pill" data-rev-sort="views">Views</button>
+                      <button type="button" class="mini-pill" data-rev-sort="rpm">RPM</button>
+                      <button type="button" class="mini-pill" data-rev-sort="clicks">Clicks</button>
+                    </div>
                   </div>
                   <div class="rev-table-wrap">
                     <table class="rev-table">
@@ -2021,64 +2308,7 @@
                           <th class="num">Clicks</th>
                         </tr>
                       </thead>
-                      <tbody>
-                        <tr class="rev-total">
-                          <td>All Countries</td>
-                          <td class="num">$59.69</td>
-                          <td class="num">26,388</td>
-                          <td class="num">$2.26</td>
-                          <td class="num">65,410</td>
-                          <td class="num">651</td>
-                        </tr>
-                        <tr>
-                          <td>United States</td>
-                          <td class="num">$46.34</td>
-                          <td class="num">12,602</td>
-                          <td class="num">$3.68</td>
-                          <td class="num">38,647</td>
-                          <td class="num">309</td>
-                        </tr>
-                        <tr>
-                          <td>Canada</td>
-                          <td class="num">$4.02</td>
-                          <td class="num">1,758</td>
-                          <td class="num">$2.29</td>
-                          <td class="num">5,430</td>
-                          <td class="num">37</td>
-                        </tr>
-                        <tr>
-                          <td>United Kingdom</td>
-                          <td class="num">$1.54</td>
-                          <td class="num">666</td>
-                          <td class="num">$2.31</td>
-                          <td class="num">2,000</td>
-                          <td class="num">23</td>
-                        </tr>
-                        <tr>
-                          <td>India</td>
-                          <td class="num">$1.31</td>
-                          <td class="num">5,811</td>
-                          <td class="num">$0.23</td>
-                          <td class="num">5,576</td>
-                          <td class="num">163</td>
-                        </tr>
-                        <tr>
-                          <td>Australia</td>
-                          <td class="num">$1.10</td>
-                          <td class="num">460</td>
-                          <td class="num">$2.39</td>
-                          <td class="num">1,450</td>
-                          <td class="num">6</td>
-                        </tr>
-                        <tr>
-                          <td>Germany</td>
-                          <td class="num">$0.80</td>
-                          <td class="num">484</td>
-                          <td class="num">$1.65</td>
-                          <td class="num">1,415</td>
-                          <td class="num">14</td>
-                        </tr>
-                      </tbody>
+                      <tbody id="revTableBody"></tbody>
                     </table>
                   </div>
                 </div>
@@ -3255,6 +3485,7 @@
       { label: 'Inspect: @booyahVerse7 (Monetized YouTube)', hint: 'YOUTUBE', run: () => openProjectModal(5) },
       { label: 'Switch Hero Surface: Contour / Matrix / Nodes', hint: 'CANVAS', run: () => setCanvasMode(currentCanvasMode === 'contour' ? 'matrix' : currentCanvasMode === 'matrix' ? 'nodes' : 'contour') },
       { label: 'Toggle 12-Column Blueprint Grid', hint: 'KEY G', run: () => toggleBlueprintGrid() },
+      { label: 'Toggle Gotham Bat-Signal Mode', hint: 'KEY B', run: () => toggleBatSignal() },
       { label: 'Copy Email (rashtriya.73@gmail.com)', hint: 'CLIPBOARD', run: () => copyEmail() },
       { label: 'Open Contact Modal', hint: 'ACTION', run: () => openContactModal() }
     ];
@@ -3344,6 +3575,8 @@
         else openCmdModal();
       } else if (!typing && e.key.toLowerCase() === 'g' && !e.metaKey && !e.ctrlKey) {
         toggleBlueprintGrid();
+      } else if (!typing && e.key.toLowerCase() === 'b' && !e.metaKey && !e.ctrlKey) {
+        toggleBatSignal();
       } else if (e.key === 'Escape') {
         if (cmdModal.classList.contains('is-open')) closeModal(cmdModal, true);
         else if (requestModal.classList.contains('is-open')) closeModal(requestModal, true);
@@ -3395,6 +3628,569 @@
     document.getElementById('copyEmailBtn').addEventListener('click', copyEmail);
 
     /* ========================================
+       INTERACTIVE TRACTION & REVENUE DASHBOARD
+       ======================================== */
+    function initTractionDashboard() {
+      // 1) Interactive GSC Chart Scrubber + Mode Toggle
+      const gscData = [
+        { date: 'Dec 2025', impr: 80,   clicks: 5 },
+        { date: 'Jan 2026', impr: 160,  clicks: 2 },
+        { date: 'Feb 2026', impr: 320,  clicks: 3 },
+        { date: 'Mar 2026', impr: 480,  clicks: 5 },
+        { date: 'Apr 2026', impr: 1650, clicks: 8 },
+        { date: 'Apr 18',   impr: 1920, clicks: 14 },
+        { date: 'May 2026', impr: 2740, clicks: 9 },
+        { date: 'May 14',   impr: 2610, clicks: 8 },
+        { date: 'Jun 2026', impr: 420,  clicks: 2 },
+        { date: 'Jul 2026', impr: 680,  clicks: 4 },
+        { date: 'Aug 2026', impr: 1380, clicks: 6 },
+        { date: 'Sep 2026', impr: 520,  clicks: 4 }
+      ];
+      const maxImpr = 2850, maxClicks = 15;
+      const W = 360, H = 88, topPad = 24, botPad = 6;
+      const pts = gscData.map((d, i) => {
+        const x = 6 + (i / (gscData.length - 1)) * (W - 12);
+        const yImpr = topPad + (1 - d.impr / maxImpr) * (H - topPad - botPad);
+        const yClicks = topPad + (1 - d.clicks / maxClicks) * (H - topPad - botPad);
+        return { ...d, x, yImpr, yClicks };
+      });
+
+      const lineImpr = document.getElementById('gscLineImpr');
+      const areaImpr = document.getElementById('gscAreaImpr');
+      const lineClicks = document.getElementById('gscLineClicks');
+      const cursorLine = document.getElementById('gscCursorLine');
+      const dotImpr = document.getElementById('gscDotImpr');
+      const dotClicks = document.getElementById('gscDotClicks');
+      const gscDate = document.getElementById('gscDate');
+      const gscValImpr = document.getElementById('gscValImpr');
+      const gscValClicks = document.getElementById('gscValClicks');
+      const gscBox = document.getElementById('gscChartBox');
+
+      if (lineImpr && areaImpr && lineClicks) {
+        const dImpr = pts.map((p, i) => `${i === 0 ? 'M' : 'L'}${p.x.toFixed(1)} ${p.yImpr.toFixed(1)}`).join(' ');
+        const dClicks = pts.map((p, i) => `${i === 0 ? 'M' : 'L'}${p.x.toFixed(1)} ${p.yClicks.toFixed(1)}`).join(' ');
+        lineImpr.setAttribute('d', dImpr);
+        areaImpr.setAttribute('d', `${dImpr} L${pts[pts.length - 1].x.toFixed(1)} ${H} L${pts[0].x.toFixed(1)} ${H} Z`);
+        lineClicks.setAttribute('d', dClicks);
+
+        let gscMode = 'both';
+        function focusPoint(idx) {
+          const pt = pts[Math.max(0, Math.min(pts.length - 1, idx))];
+          cursorLine.setAttribute('x1', pt.x); cursorLine.setAttribute('x2', pt.x);
+          dotImpr.setAttribute('cx', pt.x); dotImpr.setAttribute('cy', pt.yImpr);
+          dotClicks.setAttribute('cx', pt.x); dotClicks.setAttribute('cy', pt.yClicks);
+          gscDate.textContent = pt.date;
+          gscValImpr.textContent = pt.impr >= 1000 ? `${(pt.impr / 1000).toFixed(1)}K impr` : `${pt.impr} impr`;
+          gscValClicks.textContent = `${pt.clicks} clicks`;
+        }
+        focusPoint(6);
+
+        function applyGscMode(mode) {
+          gscMode = mode;
+          const showI = mode === 'both' || mode === 'impr';
+          const showC = mode === 'both' || mode === 'clicks';
+          lineImpr.style.opacity = showI ? '1' : '0.08';
+          areaImpr.style.opacity = showI ? '1' : '0';
+          dotImpr.style.opacity = showI ? '1' : '0';
+          lineClicks.style.opacity = showC ? '0.9' : '0.08';
+          dotClicks.style.opacity = showC ? '1' : '0';
+        }
+
+        document.querySelectorAll('[data-gsc-mode]').forEach((btn) => {
+          btn.addEventListener('click', () => {
+            document.querySelectorAll('[data-gsc-mode]').forEach((b) => b.classList.toggle('is-active', b === btn));
+            applyGscMode(btn.getAttribute('data-gsc-mode'));
+          });
+        });
+
+        gscBox.addEventListener('pointermove', (e) => {
+          const rect = gscBox.getBoundingClientRect();
+          const ratio = Math.max(0, Math.min(1, (e.clientX - rect.left) / Math.max(1, rect.width)));
+          focusPoint(Math.round(ratio * (pts.length - 1)));
+        });
+      }
+
+      // 2) Realtime GA4 Per-Minute Bars (subtle organic pulse)
+      const gaBarsEl = document.getElementById('gaMinuteBars');
+      if (gaBarsEl) {
+        const baseHeights = [35, 48, 62, 38, 64, 60, 44, 42, 34, 46, 48, 28, 22, 82, 46, 54, 24, 86, 30, 92];
+        const bars = baseHeights.map((h) => {
+          const div = document.createElement('div');
+          div.className = 'ga-bar';
+          div.style.height = h + '%';
+          gaBarsEl.appendChild(div);
+          return { el: div, base: h };
+        });
+        if (!reducedMotion) {
+          setInterval(() => {
+            bars.forEach((b) => {
+              const delta = Math.round((Math.random() - 0.5) * 18);
+              b.el.style.height = Math.max(16, Math.min(98, b.base + delta)) + '%';
+            });
+          }, 1800);
+        }
+      }
+
+      // 3) Sortable AdSense Revenue Table + Country Cross-Highlight
+      const REV_ROWS = [
+        { country: 'United States',  earnings: 46.34, views: 12602, rpm: 3.68, impr: 38647, clicks: 309 },
+        { country: 'Canada',         earnings: 4.02,  views: 1758,  rpm: 2.29, impr: 5430,  clicks: 37  },
+        { country: 'United Kingdom', earnings: 1.54,  views: 666,   rpm: 2.31, impr: 2000,  clicks: 23  },
+        { country: 'India',          earnings: 1.31,  views: 5811,  rpm: 0.23, impr: 5576,  clicks: 163 },
+        { country: 'Australia',      earnings: 1.10,  views: 460,   rpm: 2.39, impr: 1450,  clicks: 6   },
+        { country: 'Germany',        earnings: 0.80,  views: 484,   rpm: 1.65, impr: 1415,  clicks: 14  }
+      ];
+      let currentSort = 'earnings';
+      let activeCountry = '';
+      const revBody = document.getElementById('revTableBody');
+
+      function renderRevTable() {
+        if (!revBody) return;
+        const sorted = [...REV_ROWS].sort((a, b) => b[currentSort] - a[currentSort]);
+        const maxVal = Math.max(...sorted.map((r) => r.earnings));
+        revBody.innerHTML = '';
+
+        const totalTr = document.createElement('tr');
+        totalTr.className = 'rev-total';
+        totalTr.innerHTML = `
+          <td>All Countries</td>
+          <td class="num">$59.69</td>
+          <td class="num">26,388</td>
+          <td class="num">$2.26</td>
+          <td class="num">65,410</td>
+          <td class="num">651</td>
+        `;
+        revBody.appendChild(totalTr);
+
+        sorted.forEach((r) => {
+          const pct = Math.max(4, Math.round((r.earnings / maxVal) * 100));
+          const tr = document.createElement('tr');
+          if (activeCountry === r.country) tr.classList.add('is-highlighted');
+          tr.innerHTML = `
+            <td>${r.country}</td>
+            <td class="num">
+              <span class="rev-share-wrap">
+                <span class="rev-share-bar"><span class="rev-share-fill" style="width:${pct}%"></span></span>
+                <span>$${r.earnings.toFixed(2)}</span>
+              </span>
+            </td>
+            <td class="num">${r.views.toLocaleString()}</td>
+            <td class="num">$${r.rpm.toFixed(2)}</td>
+            <td class="num">${r.impr.toLocaleString()}</td>
+            <td class="num">${r.clicks}</td>
+          `;
+          tr.addEventListener('click', () => syncCountry(r.country));
+          revBody.appendChild(tr);
+        });
+      }
+
+      function syncCountry(name) {
+        activeCountry = activeCountry === name ? '' : name;
+        document.querySelectorAll('[data-country-sync]').forEach((el) => {
+          el.classList.toggle('is-highlighted', el.getAttribute('data-country-sync') === activeCountry);
+        });
+        renderRevTable();
+      }
+
+      document.querySelectorAll('[data-country-sync]').forEach((row) => {
+        const trigger = () => syncCountry(row.getAttribute('data-country-sync'));
+        row.addEventListener('click', trigger);
+        row.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); trigger(); } });
+      });
+
+      document.querySelectorAll('[data-rev-sort]').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          currentSort = btn.getAttribute('data-rev-sort');
+          document.querySelectorAll('[data-rev-sort]').forEach((b) => b.classList.toggle('is-active', b === btn));
+          renderRevTable();
+        });
+      });
+
+      renderRevTable();
+    }
+
+    /* ========================================
+       PC INTERACTIVE BACKGROUND (MAGNETIC DOTS + RIPPLES)
+       ======================================== */
+    function initPageBackground() {
+      if (reducedMotion || !canHover || window.innerWidth < 1024) return;
+      const canvas = document.getElementById('pageBgCanvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+
+      let dpr = Math.min(window.devicePixelRatio || 1, 2);
+      let w = 0, h = 0;
+      const spacing = 42;
+      let pointer = { x: -9999, y: -9999, active: false };
+      let smoothPtr = { x: -9999, y: -9999 };
+      const ripples = [];
+
+      function resize() {
+        dpr = Math.min(window.devicePixelRatio || 1, 2);
+        w = window.innerWidth;
+        h = window.innerHeight;
+        canvas.width = Math.round(w * dpr);
+        canvas.height = Math.round(h * dpr);
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      }
+      resize();
+      window.addEventListener('resize', resize);
+
+      window.addEventListener('pointermove', (e) => {
+        pointer.x = e.clientX;
+        pointer.y = e.clientY;
+        if (!pointer.active) {
+          smoothPtr.x = e.clientX;
+          smoothPtr.y = e.clientY;
+          pointer.active = true;
+        }
+      });
+
+      window.addEventListener('pointerleave', () => {
+        pointer.active = false;
+      });
+
+      window.addEventListener('pointerdown', (e) => {
+        if (window.innerWidth < 1024) return;
+        ripples.push({ x: e.clientX, y: e.clientY, r: 8, maxR: 220, alpha: 0.36 });
+      });
+
+      function tick() {
+        if (window.innerWidth < 1024) {
+          requestAnimationFrame(tick);
+          return;
+        }
+        ctx.clearRect(0, 0, w, h);
+
+        if (pointer.active) {
+          smoothPtr.x += (pointer.x - smoothPtr.x) * 0.16;
+          smoothPtr.y += (pointer.y - smoothPtr.y) * 0.16;
+
+          // Soft warm apricot ambient glow following cursor
+          const glow = ctx.createRadialGradient(smoothPtr.x, smoothPtr.y, 0, smoothPtr.x, smoothPtr.y, 260);
+          glow.addColorStop(0, 'rgba(235, 174, 124, 0.14)');
+          glow.addColorStop(0.55, 'rgba(207, 128, 71, 0.045)');
+          glow.addColorStop(1, 'rgba(207, 128, 71, 0)');
+          ctx.fillStyle = glow;
+          ctx.fillRect(0, 0, w, h);
+        }
+
+        // Scroll parallax offset for subtle depth
+        const scrollOffsetY = -(window.scrollY * 0.18) % spacing;
+        const radius = 175;
+        const nearPts = [];
+
+        for (let gx = spacing * 0.5; gx < w + spacing; gx += spacing) {
+          for (let gy = scrollOffsetY; gy < h + spacing; gy += spacing) {
+            let x = gx;
+            let y = gy;
+            let influence = 0;
+
+            if (pointer.active) {
+              const dx = x - smoothPtr.x;
+              const dy = y - smoothPtr.y;
+              const dist = Math.hypot(dx, dy);
+              if (dist < radius && dist > 0.1) {
+                influence = 1 - dist / radius;
+                const push = influence * influence * 14;
+                x += (dx / dist) * push;
+                y += (dy / dist) * push;
+                if (dist < 125) nearPts.push({ x, y, influence });
+              }
+            }
+
+            // Ripple displacement
+            for (let i = 0; i < ripples.length; i++) {
+              const rp = ripples[i];
+              const dx = x - rp.x, dy = y - rp.y;
+              const dist = Math.hypot(dx, dy);
+              const band = Math.abs(dist - rp.r);
+              if (band < 28 && dist > 0.1) {
+                const wave = (1 - band / 28) * rp.alpha * 18;
+                x += (dx / dist) * wave;
+                y += (dy / dist) * wave;
+                influence = Math.max(influence, (1 - band / 28) * rp.alpha * 1.4);
+              }
+            }
+
+            const dotR = 1.15 + influence * 1.65;
+            if (influence > 0.06) {
+              ctx.fillStyle = `rgba(177, 95, 44, ${(0.12 + influence * 0.55).toFixed(3)})`;
+            } else {
+              ctx.fillStyle = 'rgba(17, 17, 17, 0.085)';
+            }
+            ctx.beginPath();
+            ctx.arc(x, y, dotR, 0, Math.PI * 2);
+            ctx.fill();
+          }
+        }
+
+        // Subtle connecting hairline threads near cursor
+        if (pointer.active && nearPts.length) {
+          ctx.lineWidth = 0.75;
+          for (let i = 0; i < nearPts.length; i++) {
+            const pt = nearPts[i];
+            ctx.strokeStyle = `rgba(177, 95, 44, ${(pt.influence * 0.22).toFixed(3)})`;
+            ctx.beginPath();
+            ctx.moveTo(smoothPtr.x, smoothPtr.y);
+            ctx.lineTo(pt.x, pt.y);
+            ctx.stroke();
+          }
+        }
+
+        // Draw & decay click ripples
+        for (let i = ripples.length - 1; i >= 0; i--) {
+          const rp = ripples[i];
+          rp.r += 5.5;
+          rp.alpha *= 0.945;
+          ctx.strokeStyle = `rgba(177, 95, 44, ${rp.alpha.toFixed(3)})`;
+          ctx.lineWidth = 1.1;
+          ctx.beginPath();
+          ctx.arc(rp.x, rp.y, rp.r, 0, Math.PI * 2);
+          ctx.stroke();
+          if (rp.r > rp.maxR || rp.alpha < 0.015) ripples.splice(i, 1);
+        }
+
+        requestAnimationFrame(tick);
+      }
+      requestAnimationFrame(tick);
+    }
+
+    /* ========================================
+       INTERACTIVE GOTHAM BAT-SIGNAL ENGINE
+       ======================================== */
+    let batActive = false;
+    let toggleBatSignal = () => {};
+
+    function initBatSignal() {
+      const canvas = document.getElementById('batSignalCanvas');
+      const toggleBtn = document.getElementById('batToggleBtn');
+      const exitBtn = document.getElementById('batExitBtn');
+      const pill = document.getElementById('batPill');
+      if (!canvas || !toggleBtn) return;
+
+      const ctx = canvas.getContext('2d');
+      let dpr = Math.min(window.devicePixelRatio || 1, 2);
+      let w = window.innerWidth, h = window.innerHeight;
+      let rafId = null;
+      let target = { x: w * 0.52, y: h * 0.36 };
+      let aim = { x: w * 0.52, y: h * 0.36 };
+      let hasPointer = false;
+      let t = 0;
+
+      const rain = Array.from({ length: 65 }, () => ({
+        x: Math.random() * 1800,
+        y: Math.random() * 1100,
+        len: 10 + Math.random() * 14,
+        spd: 9 + Math.random() * 7
+      }));
+
+      const bats = [];
+
+      function resize() {
+        dpr = Math.min(window.devicePixelRatio || 1, 2);
+        w = window.innerWidth;
+        h = window.innerHeight;
+        canvas.width = Math.round(w * dpr);
+        canvas.height = Math.round(h * dpr);
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      }
+      resize();
+      window.addEventListener('resize', resize);
+
+      window.addEventListener('pointermove', (e) => {
+        if (!batActive) return;
+        hasPointer = true;
+        target.x = e.clientX;
+        target.y = e.clientY;
+      });
+
+      function spawnSwarm(cx, cy, count = 14) {
+        for (let i = 0; i < count; i++) {
+          const ang = (Math.PI * 2 * i) / count + (Math.random() - 0.5) * 0.5;
+          const spd = 2.6 + Math.random() * 4.4;
+          bats.push({
+            x: cx + (Math.random() - 0.5) * 24,
+            y: cy + (Math.random() - 0.5) * 24,
+            vx: Math.cos(ang) * spd,
+            vy: Math.sin(ang) * spd - 1.2,
+            scale: 0.24 + Math.random() * 0.32,
+            flap: Math.random() * Math.PI * 2,
+            flapSpd: 0.28 + Math.random() * 0.16,
+            alpha: 1
+          });
+        }
+      }
+
+      window.addEventListener('pointerdown', (e) => {
+        if (!batActive) return;
+        if (e.target.closest('#batToggleBtn, #batExitBtn')) return;
+        target.x = e.clientX;
+        target.y = e.clientY;
+        hasPointer = true;
+        spawnSwarm(e.clientX, e.clientY, 14);
+      });
+
+      function drawBatSilhouette(c, cx, cy, scale, wingLift = 0) {
+        c.save();
+        c.translate(cx, cy);
+        c.scale(scale, scale);
+        c.beginPath();
+        // Ears & head
+        c.moveTo(0, -14);
+        c.lineTo(4, -22);
+        c.lineTo(7, -12);
+        // Right wing upper edge
+        c.quadraticCurveTo(22, -16 - wingLift * 14, 46, -24 - wingLift * 20);
+        c.quadraticCurveTo(64, -8 - wingLift * 10, 74, 2 + wingLift * 6);
+        // Right wing scallops
+        c.quadraticCurveTo(54, 0, 44, 14);
+        c.quadraticCurveTo(30, 5, 18, 18);
+        // Tail
+        c.quadraticCurveTo(8, 12, 0, 26);
+        // Left wing scallops
+        c.quadraticCurveTo(-8, 12, -18, 18);
+        c.quadraticCurveTo(-30, 5, -44, 14);
+        c.quadraticCurveTo(-54, 0, -74, 2 + wingLift * 6);
+        // Left wing upper edge
+        c.quadraticCurveTo(-64, -8 - wingLift * 10, -46, -24 - wingLift * 20);
+        c.quadraticCurveTo(-22, -16 - wingLift * 14, -7, -12);
+        c.lineTo(-4, -22);
+        c.closePath();
+        c.fill();
+        c.restore();
+      }
+
+      function playSubtleChime() {
+        try {
+          const AC = window.AudioContext || window.webkitAudioContext;
+          if (!AC) return;
+          const ac = new AC();
+          const osc = ac.createOscillator();
+          const gain = ac.createGain();
+          osc.type = 'triangle';
+          osc.frequency.setValueAtTime(110, ac.currentTime);
+          osc.frequency.exponentialRampToValueAtTime(55, ac.currentTime + 0.45);
+          gain.gain.setValueAtTime(0.06, ac.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.0001, ac.currentTime + 0.5);
+          osc.connect(gain);
+          gain.connect(ac.destination);
+          osc.start();
+          osc.stop(ac.currentTime + 0.52);
+        } catch (_e) {}
+      }
+
+      function render() {
+        if (!batActive) { rafId = null; return; }
+        t += 0.018;
+        ctx.clearRect(0, 0, w, h);
+
+        // Gotham atmospheric dark tint over page
+        ctx.fillStyle = 'rgba(7, 8, 13, 0.72)';
+        ctx.fillRect(0, 0, w, h);
+
+        // Gentle auto-sweep when idle or on mobile
+        if (!hasPointer) {
+          target.x = w * 0.5 + Math.cos(t * 0.7) * (w * 0.22);
+          target.y = h * 0.34 + Math.sin(t * 1.1) * (h * 0.1);
+        }
+        aim.x += (target.x - aim.x) * 0.12;
+        aim.y += (target.y - aim.y) * 0.12;
+
+        // Projector origin at bottom-left rooftop
+        const srcX = w * 0.08;
+        const srcY = h + 20;
+        const spotR = Math.min(w, h) * 0.16;
+        const dx = aim.x - srcX;
+        const dy = aim.y - srcY;
+        const angle = Math.atan2(dy, dx);
+        const perpX = -Math.sin(angle) * spotR * 0.92;
+        const perpY = Math.cos(angle) * spotR * 0.92;
+
+        // Volumetric searchlight cone
+        const coneGrad = ctx.createLinearGradient(srcX, srcY, aim.x, aim.y);
+        coneGrad.addColorStop(0, 'rgba(255, 224, 130, 0.34)');
+        coneGrad.addColorStop(0.55, 'rgba(245, 197, 66, 0.16)');
+        coneGrad.addColorStop(1, 'rgba(245, 197, 66, 0.06)');
+        ctx.fillStyle = coneGrad;
+        ctx.beginPath();
+        ctx.moveTo(srcX - 16, srcY);
+        ctx.lineTo(srcX + 16, srcY);
+        ctx.lineTo(aim.x + perpX, aim.y + perpY);
+        ctx.lineTo(aim.x - perpX, aim.y - perpY);
+        ctx.closePath();
+        ctx.fill();
+
+        // Glowing circular Bat-Signal disc
+        const halo = ctx.createRadialGradient(aim.x, aim.y, spotR * 0.1, aim.x, aim.y, spotR * 1.35);
+        halo.addColorStop(0, 'rgba(255, 236, 168, 0.95)');
+        halo.addColorStop(0.62, 'rgba(245, 197, 66, 0.65)');
+        halo.addColorStop(0.82, 'rgba(245, 197, 66, 0.18)');
+        halo.addColorStop(1, 'rgba(245, 197, 66, 0)');
+        ctx.fillStyle = halo;
+        ctx.beginPath();
+        ctx.arc(aim.x, aim.y, spotR * 1.35, 0, Math.PI * 2);
+        ctx.fill();
+
+        // Crisp Bat emblem inside the spotlight
+        ctx.fillStyle = 'rgba(10, 10, 14, 0.92)';
+        drawBatSilhouette(ctx, aim.x, aim.y, (spotR / 86));
+
+        // Subtle Gotham rain streaks
+        ctx.strokeStyle = 'rgba(220, 230, 255, 0.14)';
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        for (let i = 0; i < rain.length; i++) {
+          const r = rain[i];
+          r.y += r.spd;
+          r.x -= r.spd * 0.18;
+          if (r.y > h) { r.y = -20; r.x = Math.random() * (w + 150); }
+          ctx.moveTo(r.x, r.y);
+          ctx.lineTo(r.x - r.len * 0.18, r.y + r.len);
+        }
+        ctx.stroke();
+
+        // Animated swooping bats
+        for (let i = bats.length - 1; i >= 0; i--) {
+          const b = bats[i];
+          b.x += b.vx;
+          b.y += b.vy;
+          b.vy -= 0.03;
+          b.flap += b.flapSpd;
+          b.alpha -= 0.011;
+          if (b.alpha <= 0) { bats.splice(i, 1); continue; }
+          ctx.fillStyle = `rgba(12, 12, 16, ${Math.min(1, b.alpha).toFixed(2)})`;
+          drawBatSilhouette(ctx, b.x, b.y, b.scale, Math.sin(b.flap));
+        }
+
+        rafId = requestAnimationFrame(render);
+      }
+
+      toggleBatSignal = (forceState) => {
+        batActive = typeof forceState === 'boolean' ? forceState : !batActive;
+        canvas.classList.toggle('is-active', batActive);
+        toggleBtn.classList.toggle('is-active', batActive);
+        toggleBtn.setAttribute('aria-pressed', String(batActive));
+        if (pill) pill.classList.toggle('is-active', batActive);
+
+        if (batActive) {
+          playSubtleChime();
+          spawnSwarm(w * 0.5, h * 0.4, 16);
+          if (!rafId) rafId = requestAnimationFrame(render);
+        } else {
+          if (rafId) { cancelAnimationFrame(rafId); rafId = null; }
+          ctx.clearRect(0, 0, w, h);
+        }
+      };
+
+      toggleBtn.addEventListener('click', () => toggleBatSignal());
+      if (exitBtn) exitBtn.addEventListener('click', () => toggleBatSignal(false));
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && batActive) toggleBatSignal(false);
+      });
+    }
+
+    /* ========================================
        BOOT
        ======================================== */
     initClock();
@@ -3404,7 +4200,10 @@
     initScrollReveals();
     initScrollTelemetry();
     initStatsCountUp();
+    initTractionDashboard();
     initHeroCanvases();
+    initPageBackground();
+    initBatSignal();
     runLoader();
   </script>
 </body>
