@@ -1429,6 +1429,419 @@
       transition: background-color 0.2s ease, color 0.2s ease;
     }
     .bat-pill__exit:hover { background: #f5c542; color: #0a0a0a; }
+
+    /* ========================================
+       CINEMATIC DEVELOPER JOURNEY TIMELINE (#journey)
+       ======================================== */
+    .journey-wrap {
+      padding: 1.5rem 1rem 3.5rem;
+      background: transparent;
+    }
+    .journey-section {
+      position: relative;
+      background: var(--ink);
+      color: #ffffff;
+      border-radius: var(--radius-card);
+      overflow: hidden;
+      padding: 4.5rem 1.25rem 5.5rem;
+      box-shadow: 0 28px 70px rgba(0, 0, 0, 0.22);
+      border: 1px solid rgba(255, 255, 255, 0.07);
+    }
+    .journey-ambient {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background:
+        radial-gradient(ellipse 55% 32% at 18% 8%, rgba(207, 128, 71, 0.14), transparent 70%),
+        radial-gradient(ellipse 55% 35% at 84% 88%, rgba(177, 95, 44, 0.12), transparent 70%);
+    }
+    .journey-inner {
+      position: relative;
+      z-index: 2;
+      max-width: 78rem;
+      margin-inline: auto;
+    }
+
+    /* Section Header */
+    .journey-header {
+      text-align: center;
+      max-width: 44rem;
+      margin: 0 auto 4rem;
+    }
+    .journey-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.38rem 0.95rem;
+      border-radius: var(--radius-pill);
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(207, 128, 71, 0.32);
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--accent-from);
+      margin-bottom: 1.25rem;
+    }
+    .journey-eyebrow-dot {
+      width: 0.4rem;
+      height: 0.4rem;
+      border-radius: 9999px;
+      background: var(--accent-from);
+      box-shadow: 0 0 10px rgba(207, 128, 71, 0.85);
+    }
+    .journey-heading {
+      font-size: clamp(2.15rem, 5vw, 3.85rem);
+      font-weight: 600;
+      letter-spacing: -0.03em;
+      line-height: 1.05;
+      color: #ffffff;
+    }
+    .journey-subtitle {
+      margin-top: 1.15rem;
+      font-size: clamp(0.98rem, 1.5vw, 1.15rem);
+      color: rgba(244, 244, 246, 0.62);
+      font-style: italic;
+      line-height: 1.55;
+    }
+
+    /* Sticky Chapter Progress Indicator & Nav Dots */
+    .journey-nav {
+      position: sticky;
+      top: 1rem;
+      z-index: 25;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      max-width: 34rem;
+      margin: 0 auto 3.5rem;
+      padding: 0.55rem 0.95rem;
+      border-radius: var(--radius-pill);
+      background: rgba(10, 10, 10, 0.86);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
+    }
+    .journey-nav__status {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.05em;
+      color: rgba(255, 255, 255, 0.78);
+      white-space: nowrap;
+    }
+    .journey-nav__status strong {
+      color: #f7d4b6;
+      font-weight: 600;
+      transition: color 0.35s ease;
+    }
+    .journey-nav.is-green .journey-nav__status strong {
+      color: var(--accent-from);
+    }
+    .journey-dots {
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+    }
+    .journey-dot {
+      position: relative;
+      width: 0.62rem;
+      height: 0.62rem;
+      border-radius: 9999px;
+      background: rgba(255, 255, 255, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      transition: transform 0.25s ease, background-color 0.25s ease, box-shadow 0.25s ease;
+    }
+    .journey-dot:hover {
+      transform: scale(1.3);
+      background: rgba(255, 255, 255, 0.55);
+    }
+    .journey-dot.is-active {
+      transform: scale(1.32);
+      background: #f7d4b6;
+      border-color: #ffffff;
+      box-shadow: 0 0 12px rgba(247, 212, 182, 0.8);
+    }
+    .journey-dot[data-tone="green"].is-active {
+      background: var(--accent-from);
+      border-color: #f7d4b6;
+      box-shadow: 0 0 12px rgba(207, 128, 71, 0.85);
+    }
+
+    /* Timeline Rail */
+    .journey-track {
+      position: relative;
+      padding-top: 2rem;
+      padding-bottom: 1rem;
+    }
+    .journey-origin {
+      position: absolute;
+      left: 0.9rem;
+      top: 0;
+      width: 0.75rem;
+      height: 0.75rem;
+      transform: translateX(-50%);
+      border-radius: 9999px;
+      background: #f7d4b6;
+      box-shadow: 0 0 16px rgba(247, 212, 182, 0.85), 0 0 0 5px rgba(207, 128, 71, 0.18);
+      z-index: 3;
+    }
+    .journey-rail-bg {
+      position: absolute;
+      left: 0.9rem;
+      top: 0.4rem;
+      bottom: 0;
+      width: 2px;
+      transform: translateX(-50%);
+      background: rgba(255, 255, 255, 0.08);
+    }
+    .journey-rail-fill {
+      position: absolute;
+      left: 0.9rem;
+      top: 0.4rem;
+      bottom: 0;
+      width: 2px;
+      transform: translateX(-50%) scaleY(0);
+      transform-origin: top;
+      background: linear-gradient(180deg, #f7d4b6 0%, #cf8047 55%, #b15f2c 100%);
+      box-shadow: 0 0 14px rgba(207, 128, 71, 0.65);
+      will-change: transform;
+    }
+
+    /* Chapters */
+    .journey-chapters {
+      display: flex;
+      flex-direction: column;
+      gap: 3.5rem;
+    }
+    .journey-chapter {
+      position: relative;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+      padding-left: 2.35rem;
+    }
+    .journey-node {
+      position: absolute;
+      left: 0.9rem;
+      top: 1.5rem;
+      width: 0.85rem;
+      height: 0.85rem;
+      transform: translateX(-50%);
+      border-radius: 9999px;
+      background: #1b1b1e;
+      border: 2px solid rgba(255, 255, 255, 0.25);
+      z-index: 4;
+      transition: background-color 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease, transform 0.35s ease;
+    }
+    .journey-chapter.is-active .journey-node {
+      background: #f7d4b6;
+      border-color: #ffffff;
+      box-shadow: 0 0 0 6px rgba(247, 212, 182, 0.18), 0 0 18px rgba(247, 212, 182, 0.85);
+      transform: translateX(-50%) scale(1.15);
+    }
+    .journey-chapter[data-tone="green"].is-active .journey-node {
+      background: var(--accent-from);
+      border-color: #f7d4b6;
+      box-shadow: 0 0 0 6px rgba(207, 128, 71, 0.2), 0 0 18px rgba(207, 128, 71, 0.9);
+    }
+
+    /* Story Card */
+    .journey-card {
+      padding: 1.65rem;
+      border-radius: var(--radius-card-sm);
+      background: rgba(255, 255, 255, 0.032);
+      border: 1px solid rgba(255, 255, 255, 0.085);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      transition: border-color 0.3s ease, background-color 0.3s ease, transform 0.3s ease;
+    }
+    .journey-card:hover {
+      background: rgba(255, 255, 255, 0.048);
+      border-color: rgba(207, 128, 71, 0.36);
+      transform: translateY(-3px);
+    }
+    .journey-chapter[data-tone="green"] .journey-card:hover {
+      border-color: rgba(207, 128, 71, 0.45);
+    }
+    .journey-meta {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 0.85rem;
+    }
+    .journey-num {
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      font-weight: 600;
+      padding: 0.24rem 0.62rem;
+      border-radius: var(--radius-pill);
+      background: rgba(247, 212, 182, 0.1);
+      border: 1px solid rgba(247, 212, 182, 0.28);
+      color: #f7d4b6;
+    }
+    .journey-chapter[data-tone="green"] .journey-num {
+      background: rgba(207, 128, 71, 0.14);
+      border-color: rgba(207, 128, 71, 0.36);
+      color: var(--accent-from);
+    }
+    .journey-era {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: rgba(255, 255, 255, 0.45);
+    }
+    .journey-title {
+      font-size: clamp(1.35rem, 2.2vw, 1.75rem);
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+      color: #ffffff;
+      margin-bottom: 0.9rem;
+    }
+    .journey-copy {
+      display: flex;
+      flex-direction: column;
+      gap: 0.65rem;
+      font-size: 0.92rem;
+      line-height: 1.65;
+      color: rgba(244, 244, 246, 0.72);
+    }
+    .journey-quote {
+      margin-top: 1.25rem;
+      padding-left: 0.95rem;
+      border-left: 2px solid #f7d4b6;
+      font-size: 0.92rem;
+      font-weight: 500;
+      color: #ffffff;
+      line-height: 1.5;
+    }
+    .journey-chapter[data-tone="green"] .journey-quote {
+      border-left-color: var(--accent-from);
+    }
+
+    /* Handcrafted Visual Panel */
+    .journey-visual {
+      border-radius: var(--radius-card-sm);
+      background: #0b0b0e;
+      border: 1px solid rgba(255, 255, 255, 0.085);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      will-change: transform;
+      transition: border-color 0.3s ease;
+    }
+    .journey-visual:hover {
+      border-color: rgba(255, 255, 255, 0.18);
+    }
+    .jvis-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.65rem 1rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      color: rgba(255, 255, 255, 0.45);
+    }
+    .jvis-dots { display: inline-flex; gap: 0.32rem; }
+    .jvis-dots span { width: 0.45rem; height: 0.45rem; border-radius: 9999px; background: rgba(255, 255, 255, 0.18); }
+    .jvis-code {
+      padding: 1.15rem 1.2rem;
+      font-family: var(--font-mono);
+      font-size: 0.76rem;
+      line-height: 1.65;
+      color: rgba(244, 244, 246, 0.82);
+      overflow-x: auto;
+    }
+    .jc-kw { color: #cf8047; }
+    .jc-fn { color: #f7d4b6; }
+    .jc-str { color: rgba(255, 255, 255, 0.92); }
+    .jc-dim { color: rgba(255, 255, 255, 0.38); }
+    .jvis-term {
+      padding: 0.7rem 1.2rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.07);
+      background: rgba(255, 255, 255, 0.02);
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--accent-from);
+    }
+    .jvis-svg-wrap {
+      padding: 1.25rem;
+      display: grid;
+      place-items: center;
+      min-height: 13.5rem;
+    }
+    .jvis-svg-wrap svg { width: 100%; height: auto; max-height: 13rem; }
+
+    /* Final Cinematic Closing (Chapter 06) */
+    .journey-finale {
+      position: relative;
+      margin-top: 4rem;
+      padding: 2.75rem 1.5rem 2.25rem;
+      border-radius: var(--radius-card);
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.04) 0%, rgba(207, 128, 71, 0.09) 100%);
+      border: 1px solid rgba(255, 255, 255, 0.11);
+      text-align: center;
+      overflow: hidden;
+    }
+    .journey-finale__meta {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      margin-bottom: 1.1rem;
+    }
+    .journey-finale__copy {
+      max-width: 40rem;
+      margin: 0 auto 1.5rem;
+      font-size: 0.96rem;
+      line-height: 1.68;
+      color: rgba(244, 244, 246, 0.72);
+    }
+    .journey-finale__quote {
+      max-width: 34ch;
+      margin: 0 auto 2rem;
+      font-size: clamp(1.35rem, 2.8vw, 2.15rem);
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      line-height: 1.25;
+      background: linear-gradient(90deg, #ffffff 15%, #f7d4b6 60%, #cf8047 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .journey-horizon {
+      width: 100%;
+      max-width: 36rem;
+      margin: 0 auto;
+      height: 7.5rem;
+    }
+    .journey-horizon svg { width: 100%; height: 100%; }
+
+    /* Desktop Alternating 2-Column Timeline (>= 900px) */
+    @media (min-width: 900px) {
+      .journey-wrap { padding: 2rem 2rem 5rem; }
+      .journey-section { padding: 6rem 3rem 6.5rem; }
+      .journey-origin,
+      .journey-rail-bg,
+      .journey-rail-fill { left: 50%; }
+      .journey-chapters { gap: 5.5rem; }
+      .journey-chapter {
+        grid-template-columns: 1fr 1fr;
+        align-items: center;
+        gap: 5.5rem;
+        padding-left: 0;
+      }
+      .journey-node { left: 50%; top: 50%; transform: translate(-50%, -50%); }
+      .journey-chapter.is-active .journey-node { transform: translate(-50%, -50%) scale(1.2); }
+      .journey-chapter:nth-child(even) .journey-card { order: 2; }
+      .journey-chapter:nth-child(even) .journey-visual { order: 1; }
+      .journey-card { padding: 2.15rem; }
+      .journey-finale { padding: 4rem 3rem 2.75rem; }
+    }
   </style>
 </head>
 <body>
@@ -1503,6 +1916,7 @@
           <li><button type="button" class="nav-btn" data-scroll-to="works"><span class="nav-btn__label" data-spring-hover="y:-2;o:1;o0:0.8;t:320;f:22">Projects</span></button></li>
           <li><button type="button" class="nav-btn" data-scroll-to="services"><span class="nav-btn__label" data-spring-hover="y:-2;o:1;o0:0.8;t:320;f:22">Skills <span class="nav-caret" aria-hidden="true">▾</span></span></button></li>
           <li><button type="button" class="nav-btn" data-scroll-to="about"><span class="nav-btn__label" data-spring-hover="y:-2;o:1;o0:0.8;t:320;f:22">About</span></button></li>
+          <li><button type="button" class="nav-btn" data-scroll-to="journey"><span class="nav-btn__label" data-spring-hover="y:-2;o:1;o0:0.8;t:320;f:22">Journey</span></button></li>
           <li><button type="button" class="nav-btn" data-scroll-to="education"><span class="nav-btn__label" data-spring-hover="y:-2;o:1;o0:0.8;t:320;f:22">Traction</span></button></li>
           <li><button type="button" class="nav-btn" data-open-modal="contact"><span class="nav-btn__label" data-spring-hover="y:-2;o:1;o0:0.8;t:320;f:22">Contact</span></button></li>
         </ul>
@@ -1747,6 +2161,253 @@
         </div>
       </div>
     </section>
+
+    <!-- 3.5) CINEMATIC DEVELOPER JOURNEY TIMELINE (#journey) -->
+    <div class="shell journey-wrap">
+      <section id="journey" class="journey-section" data-section-name="02.5 / JOURNEY" aria-labelledby="journeyHeading">
+        <div class="journey-ambient" aria-hidden="true"></div>
+        <div class="journey-inner">
+          <header class="journey-header">
+            <div class="journey-eyebrow">
+              <span class="journey-eyebrow-dot" aria-hidden="true"></span>
+              <span>My Journey</span>
+            </div>
+            <h2 id="journeyHeading" class="journey-heading">From curiosity to creation.</h2>
+            <p class="journey-subtitle">&ldquo;Every great journey starts with a single line of code.&rdquo;</p>
+          </header>
+
+          <!-- Sticky Chapter Progress & Navigation Dots -->
+          <nav id="journeyNav" class="journey-nav" aria-label="Journey chapter navigation">
+            <span class="journey-nav__status">Chapter <strong id="journeyActiveNum">01</strong> / 06</span>
+            <div class="journey-dots">
+              <button type="button" class="journey-dot is-active" data-journey-jump="j-ch-1" data-tone="purple" aria-label="Jump to Chapter 01: Class 9" title="01 — Class 9: Java"></button>
+              <button type="button" class="journey-dot" data-journey-jump="j-ch-2" data-tone="purple" aria-label="Jump to Chapter 02: Class 11" title="02 — Class 11: Python & Web"></button>
+              <button type="button" class="journey-dot" data-journey-jump="j-ch-3" data-tone="purple" aria-label="Jump to Chapter 03: Expanding My Horizons" title="03 — Full-Stack Architecture"></button>
+              <button type="button" class="journey-dot" data-journey-jump="j-ch-4" data-tone="green" aria-label="Jump to Chapter 04: Beyond Coding" title="04 — SEO & Monetization"></button>
+              <button type="button" class="journey-dot" data-journey-jump="j-ch-5" data-tone="green" aria-label="Jump to Chapter 05: Gautam Buddha University" title="05 — B.Tech CSE at GBU"></button>
+              <button type="button" class="journey-dot" data-journey-jump="j-ch-6" data-tone="green" aria-label="Jump to Chapter 06: The Story Continues" title="06 — The Story Continues"></button>
+            </div>
+          </nav>
+
+          <!-- Vertical Animated Timeline -->
+          <div id="journeyTrack" class="journey-track">
+            <div class="journey-origin" aria-hidden="true"></div>
+            <div class="journey-rail-bg" aria-hidden="true"></div>
+            <div id="journeyRailFill" class="journey-rail-fill" aria-hidden="true"></div>
+
+            <div class="journey-chapters">
+              <!-- CHAPTER 01 -->
+              <article id="j-ch-1" class="journey-chapter is-active" data-chapter="01" data-tone="purple">
+                <div class="journey-node" aria-hidden="true"></div>
+                <div class="journey-card" data-j-anim="left">
+                  <div class="journey-meta">
+                    <span class="journey-num">Chapter 01</span>
+                    <span class="journey-era">Class 9 &middot; First Spark</span>
+                  </div>
+                  <h3 class="journey-title">Class 9: The First Line of Code</h3>
+                  <div class="journey-copy">
+                    <p>Java was first introduced to me through my Computer Science syllabus in Class 9. When I started learning it, something felt different. Programming genuinely felt like something built for me.</p>
+                    <p>I wasn't just memorizing syntax; I was discovering a new way to think, solve problems and create things.</p>
+                  </div>
+                  <blockquote class="journey-quote">&ldquo;That was when I found something I genuinely loved.&rdquo;</blockquote>
+                </div>
+                <div class="journey-visual" data-j-parallax>
+                  <div class="jvis-bar">
+                    <span class="jvis-dots" aria-hidden="true"><span></span><span></span><span></span></span>
+                    <span>FirstProgram.java</span>
+                  </div>
+                  <pre class="jvis-code"><code><span class="jc-kw">public class</span> <span class="jc-fn">Beginning</span> {
+  <span class="jc-kw">public static void</span> <span class="jc-fn">main</span>(String[] args) {
+    String spark = <span class="jc-str">"Hello, World"</span>;
+    System.out.<span class="jc-fn">println</span>(spark);
+  }
+}</code></pre>
+                  <div class="jvis-term">&gt; javac Beginning.java &amp;&amp; java Beginning &rarr; Hello, World</div>
+                </div>
+              </article>
+
+              <!-- CHAPTER 02 -->
+              <article id="j-ch-2" class="journey-chapter" data-chapter="02" data-tone="purple">
+                <div class="journey-node" aria-hidden="true"></div>
+                <div class="journey-card" data-j-anim="right">
+                  <div class="journey-meta">
+                    <span class="journey-num">Chapter 02</span>
+                    <span class="journey-era">Class 11 &middot; Python &amp; Web</span>
+                  </div>
+                  <h3 class="journey-title">Class 11: Beyond the Syllabus</h3>
+                  <div class="journey-copy">
+                    <p>Class 11 introduced me to Python through my syllabus. But I didn't want to limit myself to what was taught in class.</p>
+                    <p>I started exploring web development as an additional skill, learning HTML, CSS and JavaScript. I began experimenting with ideas, creating websites and discovering what was possible with code.</p>
+                  </div>
+                  <blockquote class="journey-quote">&ldquo;I stopped seeing programming as just a subject. I started seeing it as a tool to bring ideas to life.&rdquo;</blockquote>
+                </div>
+                <div class="journey-visual" data-j-parallax>
+                  <div class="jvis-bar">
+                    <span class="jvis-dots" aria-hidden="true"><span></span><span></span><span></span></span>
+                    <span>syllabus.py &middot; index.html</span>
+                  </div>
+                  <pre class="jvis-code"><code><span class="jc-dim"># Class 11 syllabus</span>
+<span class="jc-kw">def</span> <span class="jc-fn">build</span>(idea): <span class="jc-kw">return</span> f<span class="jc-str">"shipping {idea}"</span>
+
+<span class="jc-dim">&lt;!-- Beyond the classroom --&gt;</span>
+&lt;<span class="jc-kw">section</span> class=<span class="jc-str">"web-canvas"</span>&gt;
+  &lt;<span class="jc-fn">script</span>&gt;createWebsite({ html, css, js });&lt;/<span class="jc-fn">script</span>&gt;
+&lt;/<span class="jc-kw">section</span>&gt;</code></pre>
+                  <div class="jvis-term">&gt; live-server: localhost:5500 &middot; HTML / CSS / JS active</div>
+                </div>
+              </article>
+
+              <!-- CHAPTER 03 -->
+              <article id="j-ch-3" class="journey-chapter" data-chapter="03" data-tone="purple">
+                <div class="journey-node" aria-hidden="true"></div>
+                <div class="journey-card" data-j-anim="left">
+                  <div class="journey-meta">
+                    <span class="journey-num">Chapter 03</span>
+                    <span class="journey-era">Full-Stack Systems</span>
+                  </div>
+                  <h3 class="journey-title">Expanding My Horizons</h3>
+                  <div class="journey-copy">
+                    <p>I wanted to understand how things worked beyond the browser. I explored backend development, databases, APIs, frameworks and deployment.</p>
+                    <p>I gradually expanded my technical skills to React, Node.js, Express, MongoDB, PostgreSQL and other technologies. I began building more ambitious projects and experimenting with different ideas.</p>
+                  </div>
+                  <blockquote class="journey-quote">&ldquo;The goal was no longer just to learn technologies. It was to build complete products.&rdquo;</blockquote>
+                </div>
+                <div class="journey-visual" data-j-parallax>
+                  <div class="jvis-bar">
+                    <span class="jvis-dots" aria-hidden="true"><span></span><span></span><span></span></span>
+                    <span>system-architecture.svg</span>
+                  </div>
+                  <div class="jvis-svg-wrap" aria-hidden="true">
+                    <svg viewBox="0 0 380 155" fill="none">
+                      <rect x="14" y="52" width="84" height="50" rx="10" stroke="#f7d4b6" fill="rgba(247,212,182,0.08)"/>
+                      <text x="56" y="75" text-anchor="middle" fill="#ffffff" font-size="10" font-family="monospace">REACT</text>
+                      <text x="56" y="90" text-anchor="middle" fill="#f7d4b6" font-size="8" font-family="monospace">CLIENT UI</text>
+
+                      <path d="M98 77 H144" stroke="#f7d4b6" stroke-width="1.5" stroke-dasharray="4 3"/>
+                      <rect x="144" y="42" width="94" height="70" rx="12" stroke="#cf8047" stroke-width="1.5" fill="rgba(207,128,71,0.14)"/>
+                      <text x="191" y="72" text-anchor="middle" fill="#ffffff" font-size="10" font-family="monospace">NODE +</text>
+                      <text x="191" y="87" text-anchor="middle" fill="#ffffff" font-size="10" font-family="monospace">EXPRESS</text>
+                      <text x="191" y="102" text-anchor="middle" fill="#cf8047" font-size="8" font-family="monospace">REST APIs</text>
+
+                      <path d="M238 62 C262 62 262 36 286 36 M238 92 C262 92 262 118 286 118" stroke="#cf8047" stroke-width="1.4"/>
+                      <rect x="286" y="16" width="80" height="42" rx="8" stroke="#cf8047" fill="rgba(207,128,71,0.1)"/>
+                      <text x="326" y="41" text-anchor="middle" fill="#cf8047" font-size="9.5" font-family="monospace">MongoDB</text>
+                      <rect x="286" y="96" width="80" height="42" rx="8" stroke="rgba(255,255,255,0.28)" fill="rgba(255,255,255,0.04)"/>
+                      <text x="326" y="121" text-anchor="middle" fill="rgba(255,255,255,0.8)" font-size="9.5" font-family="monospace">PostgreSQL</text>
+                    </svg>
+                  </div>
+                </div>
+              </article>
+
+              <!-- CHAPTER 04 -->
+              <article id="j-ch-4" class="journey-chapter" data-chapter="04" data-tone="green">
+                <div class="journey-node" aria-hidden="true"></div>
+                <div class="journey-card" data-j-anim="right">
+                  <div class="journey-meta">
+                    <span class="journey-num">Chapter 04</span>
+                    <span class="journey-era">Growth &amp; Monetization</span>
+                  </div>
+                  <h3 class="journey-title">Beyond Coding</h3>
+                  <div class="journey-copy">
+                    <p>Eventually, I realized that building a website was only one part of the journey. I started exploring SEO, Google Search, website analytics, monetization, hosting and product growth.</p>
+                    <p>I worked on projects designed to attract real users and solve actual problems. I started understanding how technology, business and creativity come together.</p>
+                  </div>
+                  <blockquote class="journey-quote">&ldquo;I was learning how to build, launch and grow products.&rdquo;</blockquote>
+                </div>
+                <div class="journey-visual" data-j-parallax>
+                  <div class="jvis-bar">
+                    <span class="jvis-dots" aria-hidden="true"><span></span><span></span><span></span></span>
+                    <span>search-growth-console</span>
+                  </div>
+                  <div class="jvis-svg-wrap" aria-hidden="true">
+                    <svg viewBox="0 0 380 155" fill="none">
+                      <line x1="20" y1="35" x2="360" y2="35" stroke="rgba(255,255,255,0.06)"/>
+                      <line x1="20" y1="75" x2="360" y2="75" stroke="rgba(255,255,255,0.06)"/>
+                      <line x1="20" y1="115" x2="360" y2="115" stroke="rgba(255,255,255,0.08)"/>
+                      <path d="M24 114 L72 106 L122 96 L172 78 L224 62 L284 42 L352 24" stroke="#cf8047" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+                      <path d="M24 114 L72 106 L122 96 L172 78 L224 62 L284 42 L352 24 V120 H24 Z" fill="rgba(207,128,71,0.14)"/>
+                      <circle cx="352" cy="24" r="5" fill="#cf8047"/>
+                      <circle cx="352" cy="24" r="11" fill="rgba(207,128,71,0.24)"/>
+                      <text x="24" y="24" fill="#f7d4b6" font-size="9" font-family="monospace">SEO &middot; ANALYTICS &middot; MONETIZATION</text>
+                      <text x="24" y="138" fill="rgba(255,255,255,0.45)" font-size="8.5" font-family="monospace">BUILD &rarr; INDEX &rarr; RANK &rarr; GROW</text>
+                    </svg>
+                  </div>
+                </div>
+              </article>
+
+              <!-- CHAPTER 05 -->
+              <article id="j-ch-5" class="journey-chapter" data-chapter="05" data-tone="green">
+                <div class="journey-node" aria-hidden="true"></div>
+                <div class="journey-card" data-j-anim="left">
+                  <div class="journey-meta">
+                    <span class="journey-num">Chapter 05</span>
+                    <span class="journey-era">B.Tech CSE &middot; GBU</span>
+                  </div>
+                  <h3 class="journey-title">A New Chapter: Gautam Buddha University</h3>
+                  <div class="journey-copy">
+                    <p>I entered Gautam Buddha University as a B.Tech Computer Science student. This opened a new chapter where I could explore more, collaborate with others, participate in hackathons and take on bigger technical challenges.</p>
+                    <p>From personal projects to innovative technical solutions, I wanted to keep pushing my boundaries.</p>
+                  </div>
+                  <blockquote class="journey-quote">&ldquo;Now, I'm not just learning computer science. I'm learning how to use it to create something meaningful.&rdquo;</blockquote>
+                </div>
+                <div class="journey-visual" data-j-parallax>
+                  <div class="jvis-bar">
+                    <span class="jvis-dots" aria-hidden="true"><span></span><span></span><span></span></span>
+                    <span>gbu-cse-environment</span>
+                  </div>
+                  <pre class="jvis-code"><code><span class="jc-dim">// Gautam Buddha University · Greater Noida</span>
+<span class="jc-kw">const</span> chapter = {
+  degree: <span class="jc-str">"B.Tech Computer Science &amp; Engineering"</span>,
+  arena: [<span class="jc-str">"Smart India Hackathon 2026"</span>, <span class="jc-str">"Systems"</span>],
+  mindset: <span class="jc-fn">"collaborate &amp; ship meaningful tech"</span>
+};</code></pre>
+                  <div class="jvis-term">&gt; status: active &middot; building real-world engineering solutions</div>
+                </div>
+              </article>
+            </div>
+          </div>
+
+          <!-- CHAPTER 06 — CINEMATIC FINALE -->
+          <article id="j-ch-6" class="journey-finale" data-chapter="06" data-tone="green">
+            <div class="journey-finale__meta">
+              <span class="journey-num" style="background:rgba(207,128,71,0.15);border-color:rgba(207,128,71,0.4);color:#cf8047;">Chapter 06</span>
+              <span class="journey-era">The Story Continues</span>
+            </div>
+            <h3 class="journey-title" style="margin-bottom:1rem;">The Story Continues</h3>
+            <p class="journey-finale__copy">
+              This is not the end of my journey. I'm still learning, experimenting, building products and exploring new technologies. There are more ideas to turn into reality, more problems to solve and much more to discover.
+            </p>
+            <blockquote class="journey-finale__quote">
+              &ldquo;I started with a simple Java program. I still have a long way to go. And that's the exciting part.&rdquo;
+            </blockquote>
+            <!-- Glowing Timeline Continuing into the Distance -->
+            <div class="journey-horizon" aria-hidden="true">
+              <svg viewBox="0 0 560 120" fill="none">
+                <defs>
+                  <linearGradient id="horizonBeam" x1="280" y1="0" x2="280" y2="120" gradientUnits="userSpaceOnUse">
+                    <stop offset="0%" stop-color="#f7d4b6" stop-opacity="0.95"/>
+                    <stop offset="55%" stop-color="#cf8047" stop-opacity="0.85"/>
+                    <stop offset="100%" stop-color="#cf8047" stop-opacity="0"/>
+                  </linearGradient>
+                  <radialGradient id="horizonGlow" cx="50%" cy="32%" r="48%">
+                    <stop offset="0%" stop-color="#cf8047" stop-opacity="0.32"/>
+                    <stop offset="55%" stop-color="#f7d4b6" stop-opacity="0.12"/>
+                    <stop offset="100%" stop-color="#111111" stop-opacity="0"/>
+                  </radialGradient>
+                </defs>
+                <ellipse cx="280" cy="44" rx="220" ry="44" fill="url(#horizonGlow)"/>
+                <path d="M40 112 L280 34 L520 112" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+                <path d="M120 112 L280 34 L440 112" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+                <line x1="280" y1="4" x2="280" y2="116" stroke="url(#horizonBeam)" stroke-width="2.5" stroke-linecap="round"/>
+                <circle cx="280" cy="34" r="5.5" fill="#cf8047"/>
+                <circle cx="280" cy="34" r="14" stroke="rgba(207,128,71,0.5)" stroke-width="1"/>
+                <circle cx="280" cy="34" r="24" stroke="rgba(247,212,182,0.25)" stroke-width="1" stroke-dasharray="3 4"/>
+              </svg>
+            </div>
+          </article>
+        </div>
+      </section>
+    </div>
 
     <!-- 4) CREATE BAND -->
     <section class="create-band" aria-label="Workflow philosophy">
@@ -2435,6 +3096,7 @@
           <div class="footer-col__title">Navigation</div>
           <ul class="footer-col__list">
             <li><button type="button" class="anim-link" data-scroll-to="about"><span class="anim-link__text" data-spring-hover="x:4;o:1;o0:0.65;t:320;f:22">About</span></button></li>
+            <li><button type="button" class="anim-link" data-scroll-to="journey"><span class="anim-link__text" data-spring-hover="x:4;o:1;o0:0.65;t:320;f:22">My Journey</span></button></li>
             <li><button type="button" class="anim-link" data-scroll-to="works"><span class="anim-link__text" data-spring-hover="x:4;o:1;o0:0.65;t:320;f:22">Live Projects</span></button></li>
             <li><button type="button" class="anim-link" data-scroll-to="services"><span class="anim-link__text" data-spring-hover="x:4;o:1;o0:0.65;t:320;f:22">Skills</span></button></li>
             <li><button type="button" class="anim-link" data-scroll-to="education"><span class="anim-link__text" data-spring-hover="x:4;o:1;o0:0.65;t:320;f:22">Traction &amp; Edu</span></button></li>
@@ -2495,6 +3157,7 @@
         <li><button type="button" class="nav-overlay__item" data-menu-scroll="works" style="transition-delay:125ms"><span class="nav-overlay__idx">02</span><span class="nav-overlay__label">Live Projects</span></button></li>
         <li><button type="button" class="nav-overlay__item" data-menu-scroll="services" style="transition-delay:170ms"><span class="nav-overlay__idx">03</span><span class="nav-overlay__label">Skills</span></button></li>
         <li><button type="button" class="nav-overlay__item" data-menu-scroll="about" style="transition-delay:215ms"><span class="nav-overlay__idx">04</span><span class="nav-overlay__label">About</span></button></li>
+        <li><button type="button" class="nav-overlay__item" data-menu-scroll="journey" style="transition-delay:240ms"><span class="nav-overlay__idx">05</span><span class="nav-overlay__label">My Journey</span></button></li>
         <li><button type="button" class="nav-overlay__item" data-menu-scroll="education" style="transition-delay:260ms"><span class="nav-overlay__idx">05</span><span class="nav-overlay__label">Traction &amp; Edu</span></button></li>
         <li><button type="button" class="nav-overlay__item" data-menu-contact style="transition-delay:305ms"><span class="nav-overlay__idx">06</span><span class="nav-overlay__label">Contact</span></button></li>
       </ul>
@@ -2612,6 +3275,8 @@
 
   <div id="toast" class="toast" role="status" aria-live="polite"></div>
 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
   <script type="importmap">
     { "imports": { "lenis": "https://unpkg.com/lenis@1.3.23/dist/lenis.mjs" } }
   </script>
@@ -3474,6 +4139,7 @@
     const COMMANDS = [
       { label: 'Jump to Hero', hint: '01', run: () => scrollToSection('home') },
       { label: 'Jump to About', hint: '02', run: () => scrollToSection('about') },
+      { label: 'Jump to My Journey Timeline', hint: 'STORY', run: () => scrollToSection('journey') },
       { label: 'Jump to Live Projects (6)', hint: '03', run: () => scrollToSection('works') },
       { label: 'Jump to Technical Skills', hint: '04', run: () => scrollToSection('services') },
       { label: 'Jump to Verified Traction & Revenue', hint: '05', run: () => scrollToSection('education') },
@@ -4191,6 +4857,164 @@
     }
 
     /* ========================================
+       GSAP + SCROLLTRIGGER DEVELOPER JOURNEY
+       ======================================== */
+    function initJourneyTimeline() {
+      const track = document.getElementById('journeyTrack');
+      const railFill = document.getElementById('journeyRailFill');
+      const nav = document.getElementById('journeyNav');
+      const activeNum = document.getElementById('journeyActiveNum');
+      const dots = Array.from(document.querySelectorAll('[data-journey-jump]'));
+      const chapters = Array.from(document.querySelectorAll('#journey [data-chapter]'));
+      if (!track || !chapters.length) return;
+
+      function setActiveChapter(chNum, tone) {
+        if (activeNum) activeNum.textContent = chNum;
+        if (nav) nav.classList.toggle('is-green', tone === 'green');
+        chapters.forEach((el) => el.classList.toggle('is-active', el.getAttribute('data-chapter') === chNum));
+        dots.forEach((dot) => {
+          const targetId = dot.getAttribute('data-journey-jump');
+          const matches = targetId === `j-ch-${parseInt(chNum, 10)}`;
+          dot.classList.toggle('is-active', matches);
+        });
+      }
+
+      // Clickable chapter navigation dots
+      dots.forEach((dot) => {
+        dot.addEventListener('click', () => {
+          const id = dot.getAttribute('data-journey-jump');
+          scrollToSection(id);
+        });
+      });
+
+      const hasGsap = typeof window.gsap !== 'undefined' && typeof window.ScrollTrigger !== 'undefined';
+
+      if (reducedMotion || !hasGsap) {
+        if (railFill) railFill.style.transform = 'translateX(-50%) scaleY(1)';
+        if ('IntersectionObserver' in window) {
+          const io = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                setActiveChapter(
+                  entry.target.getAttribute('data-chapter'),
+                  entry.target.getAttribute('data-tone')
+                );
+              }
+            });
+          }, { rootMargin: '-35% 0px -45% 0px' });
+          chapters.forEach((ch) => io.observe(ch));
+        }
+        return;
+      }
+
+      const gsap = window.gsap;
+      const ScrollTrigger = window.ScrollTrigger;
+      gsap.registerPlugin(ScrollTrigger);
+
+      // Sync Lenis smooth scroll with ScrollTrigger if active
+      if (lenis && typeof lenis.on === 'function') {
+        lenis.on('scroll', ScrollTrigger.update);
+      }
+
+      // 1. Progressive vertical timeline line draw + glow shift
+      if (railFill) {
+        gsap.fromTo(
+          railFill,
+          { scaleY: 0 },
+          {
+            scaleY: 1,
+            ease: 'none',
+            scrollTrigger: {
+              trigger: track,
+              start: 'top 65%',
+              end: 'bottom 55%',
+              scrub: 0.4,
+              onUpdate: (self) => {
+                const glowColor = self.progress > 0.5 ? 'rgba(207, 128, 71, 0.85)' : 'rgba(247, 212, 182, 0.72)';
+                railFill.style.boxShadow = `0 0 16px ${glowColor}`;
+              }
+            }
+          }
+        );
+      }
+
+      // 2. Chapter entrance animations, active glow tracking, and subtle visual parallax
+      const isDesktop = window.innerWidth >= 900;
+      chapters.forEach((ch) => {
+        const chNum = ch.getAttribute('data-chapter');
+        const tone = ch.getAttribute('data-tone');
+        const card = ch.querySelector('.journey-card');
+        const numBadge = ch.querySelector('.journey-num');
+        const visual = ch.querySelector('[data-j-parallax]');
+
+        ScrollTrigger.create({
+          trigger: ch,
+          start: 'top 58%',
+          end: 'bottom 42%',
+          onEnter: () => setActiveChapter(chNum, tone),
+          onEnterBack: () => setActiveChapter(chNum, tone)
+        });
+
+        if (card) {
+          const dir = card.getAttribute('data-j-anim');
+          const xOffset = isDesktop ? (dir === 'left' ? -24 : 24) : 0;
+          gsap.from(card, {
+            opacity: 0,
+            y: 34,
+            x: xOffset,
+            duration: 0.85,
+            ease: 'power3.out',
+            scrollTrigger: { trigger: ch, start: 'top 80%', once: true }
+          });
+        }
+
+        if (numBadge) {
+          gsap.from(numBadge, {
+            opacity: 0,
+            scale: 0.85,
+            duration: 0.6,
+            ease: 'power2.out',
+            scrollTrigger: { trigger: ch, start: 'top 82%', once: true }
+          });
+        }
+
+        if (visual) {
+          gsap.from(visual, {
+            opacity: 0,
+            y: 28,
+            duration: 0.85,
+            ease: 'power3.out',
+            scrollTrigger: { trigger: ch, start: 'top 82%', once: true }
+          });
+          if (isDesktop) {
+            gsap.fromTo(
+              visual,
+              { y: 18 },
+              {
+                y: -18,
+                ease: 'none',
+                scrollTrigger: { trigger: ch, start: 'top bottom', end: 'bottom top', scrub: true }
+              }
+            );
+          }
+        }
+      });
+
+      // 3. Final chapter cinematic reveal
+      const finale = document.getElementById('j-ch-6');
+      if (finale) {
+        gsap.from(finale, {
+          opacity: 0,
+          y: 42,
+          scale: 0.98,
+          duration: 1,
+          ease: 'power3.out',
+          scrollTrigger: { trigger: finale, start: 'top 82%', once: true }
+        });
+      }
+    }
+
+    /* ========================================
        BOOT
        ======================================== */
     initClock();
@@ -4204,6 +5028,7 @@
     initHeroCanvases();
     initPageBackground();
     initBatSignal();
+    initJourneyTimeline();
     runLoader();
   </script>
 </body>
