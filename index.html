@@ -1842,6 +1842,143 @@
       .journey-card { padding: 2.15rem; }
       .journey-finale { padding: 4rem 3rem 2.75rem; }
     }
+
+    /* ========================================
+       COMPETITION-GRADE KINETIC MOTION & INTERACTION
+       ======================================== */
+    /* Editorial Kinetic Marquee */
+    .marquee-strip {
+      position: relative;
+      overflow: hidden;
+      border-block: 1px solid var(--line);
+      background: rgba(248, 247, 245, 0.72);
+      backdrop-filter: blur(8px);
+      padding-block: 1rem;
+      margin-block: 1.5rem 2.5rem;
+      user-select: none;
+    }
+    .marquee-track {
+      display: flex;
+      width: max-content;
+      gap: 2.25rem;
+      animation: marqueeScroll 28s linear infinite;
+      will-change: transform;
+    }
+    .marquee-strip:hover .marquee-track { animation-play-state: paused; }
+    .marquee-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 2.25rem;
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      color: rgba(17, 17, 17, 0.68);
+      white-space: nowrap;
+    }
+    .marquee-sep { color: var(--accent); font-size: 0.9rem; }
+    @keyframes marqueeScroll {
+      0%   { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    /* 3D Perspective on Portfolio Grid for Tactile Tilt */
+    .portfolio-grid { perspective: 1200px; }
+    .project-card { transform-style: preserve-3d; }
+
+    /* Shimmer sweep on the burnt-orange CreateBand pill */
+    .create-pill--accent {
+      position: relative;
+      overflow: hidden;
+    }
+    .create-pill--accent::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(110deg, transparent 35%, rgba(255, 255, 255, 0.28) 50%, transparent 65%);
+      transform: translateX(-120%);
+      animation: pillShimmer 4.5s ease-in-out infinite;
+    }
+    @keyframes pillShimmer {
+      0%, 55% { transform: translateX(-120%); }
+      100%    { transform: translateX(120%); }
+    }
+
+    /* Interactive Theme-Matched Developer Terminal inside Skills Section */
+    .dev-shell-wrap {
+      margin-top: 3.5rem;
+      border-radius: var(--radius-card);
+      background: var(--ink);
+      color: #ffffff;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      overflow: hidden;
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.14);
+      font-family: var(--font-mono);
+    }
+    .dev-shell__bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.85rem 1.25rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.09);
+      font-size: 0.72rem;
+      color: rgba(255, 255, 255, 0.48);
+    }
+    .dev-shell__body {
+      height: 15.5rem;
+      overflow-y: auto;
+      padding: 1.1rem 1.25rem;
+      font-size: 0.78rem;
+      line-height: 1.65;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+    .ds-cmd { color: var(--accent-from); }
+    .ds-out { color: rgba(255, 255, 255, 0.82); white-space: pre-wrap; }
+    .ds-ok  { color: #4ade80; }
+    .ds-err { color: #f87171; }
+    .dev-shell__input-row {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.85rem 1.25rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.09);
+      background: rgba(255, 255, 255, 0.025);
+    }
+    .dev-shell__prompt { color: var(--accent-from); font-size: 0.78rem; flex-shrink: 0; }
+    .dev-shell__input {
+      flex: 1;
+      background: transparent;
+      border: none;
+      color: #ffffff;
+      font-family: var(--font-mono);
+      font-size: 0.88rem;
+      outline: none;
+      caret-color: var(--accent-from);
+    }
+    .dev-shell__chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      padding: 0.65rem 1.25rem 0.9rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+    }
+    .dev-shell__chip {
+      padding: 0.28rem 0.68rem;
+      border-radius: var(--radius-pill);
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.11);
+      color: rgba(255, 255, 255, 0.78);
+      font-size: 0.68rem;
+      transition: all 0.2s ease;
+    }
+    .dev-shell__chip:hover {
+      border-color: var(--accent-from);
+      color: var(--accent-from);
+      background: rgba(207, 128, 71, 0.12);
+    }
   </style>
 </head>
 <body>
@@ -2429,6 +2566,26 @@
       </ul>
     </section>
 
+    <!-- KINETIC EDITORIAL MARQUEE -->
+    <div class="marquee-strip" aria-hidden="true">
+      <div class="marquee-track">
+        <span class="marquee-item">Full-Stack Engineering <span class="marquee-sep">✦</span></span>
+        <span class="marquee-item">120K+ Google Search Impressions <span class="marquee-sep">✦</span></span>
+        <span class="marquee-item">Node.js &amp; Express.js <span class="marquee-sep">✦</span></span>
+        <span class="marquee-item">$3.68 US Page RPM <span class="marquee-sep">✦</span></span>
+        <span class="marquee-item">MongoDB &amp; Supabase <span class="marquee-sep">✦</span></span>
+        <span class="marquee-item">Smart India Hackathon 2026 <span class="marquee-sep">✦</span></span>
+        <span class="marquee-item">Monetized Web &amp; YouTube <span class="marquee-sep">✦</span></span>
+        <span class="marquee-item">Full-Stack Engineering <span class="marquee-sep">✦</span></span>
+        <span class="marquee-item">120K+ Google Search Impressions <span class="marquee-sep">✦</span></span>
+        <span class="marquee-item">Node.js &amp; Express.js <span class="marquee-sep">✦</span></span>
+        <span class="marquee-item">$3.68 US Page RPM <span class="marquee-sep">✦</span></span>
+        <span class="marquee-item">MongoDB &amp; Supabase <span class="marquee-sep">✦</span></span>
+        <span class="marquee-item">Smart India Hackathon 2026 <span class="marquee-sep">✦</span></span>
+        <span class="marquee-item">Monetized Web &amp; YouTube <span class="marquee-sep">✦</span></span>
+      </div>
+    </div>
+
     <!-- 5) PORTFOLIO (#works) — 5 LIVE SITES + MONETIZED YOUTUBE -->
     <section id="works" class="portfolio" data-section-name="03 / LIVE WORK">
       <div class="shell portfolio-inner">
@@ -2811,6 +2968,28 @@
             </div>
           </li>
         </ul>
+
+        <!-- Interactive Theme-Matched Developer Shell -->
+        <div class="dev-shell-wrap reveal" data-scroll-reveal aria-label="Interactive Developer Terminal">
+          <div class="dev-shell__bar">
+            <span class="arch-terminal__dots" aria-hidden="true"><span></span><span></span><span></span></span>
+            <span>rashtriya@gbu-cse:~ &middot; interactive shell (type 'help' or 'sudo hire-me')</span>
+          </div>
+          <div id="devShellOut" class="dev-shell__body" aria-live="polite"></div>
+          <form id="devShellForm" class="dev-shell__input-row">
+            <label for="devShellInput" class="dev-shell__prompt">rashtriya@dev:~$</label>
+            <input id="devShellInput" type="text" class="dev-shell__input" autocomplete="off" spellcheck="false" placeholder="help, projects, batman, sudo hire-me..." />
+          </form>
+          <div class="dev-shell__chips" aria-label="Quick terminal commands">
+            <button type="button" class="dev-shell__chip" data-ds-cmd="help">help</button>
+            <button type="button" class="dev-shell__chip" data-ds-cmd="projects">projects</button>
+            <button type="button" class="dev-shell__chip" data-ds-cmd="skills">skills</button>
+            <button type="button" class="dev-shell__chip" data-ds-cmd="metrics">metrics</button>
+            <button type="button" class="dev-shell__chip" data-ds-cmd="batman">batman</button>
+            <button type="button" class="dev-shell__chip" data-ds-cmd="sudo hire-me">sudo hire-me</button>
+            <button type="button" class="dev-shell__chip" data-ds-cmd="clear">clear</button>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -3183,7 +3362,11 @@
         </div>
         <h2 id="requestModalTitle" class="modal-title">Tell me what you're building.</h2>
 
-        <form id="requestForm" class="modal-form">
+        <form id="requestForm" action="https://api.web3forms.com/submit" method="POST" class="modal-form">
+          <input type="hidden" name="access_key" value="4a92a267-857b-4e92-ab8c-82588e0ef61b" />
+          <input type="hidden" name="subject" value="Rashtriya Gaurav Portfolio — New Contact Submission" />
+          <input type="hidden" name="from_name" value="Rashtriya Gaurav Portfolio" />
+          <input type="checkbox" name="botcheck" style="display:none" tabindex="-1" autocomplete="off" />
           <label class="form-field">
             <span class="form-label">Name</span>
             <input type="text" name="name" class="form-control" required placeholder="Your name" />
@@ -3194,8 +3377,9 @@
           </label>
           <label class="form-field">
             <span class="form-label">Project or Opportunity</span>
-            <textarea id="requestProjectInput" name="project" rows="4" class="form-control" required placeholder="A few words about your project, role, or timeline."></textarea>
+            <textarea id="requestProjectInput" name="message" rows="4" class="form-control" required placeholder="A few words about your project, role, or timeline."></textarea>
           </label>
+          <div id="requestFormError" role="alert" style="display:none;font-size:0.8rem;color:#b91c1c;background:#fef2f2;border:1px solid #fecaca;padding:0.6rem 0.85rem;border-radius:0.75rem;"></div>
           <div class="modal-actions">
             <span class="modal-note">rashtriya.73@gmail.com</span>
             <button type="submit" id="requestSubmitBtn" class="pill-btn pill-btn--dark pill-btn--with-arrow" data-pill-hover="up-right">
@@ -4131,6 +4315,8 @@
           requestSuccessView.classList.remove('is-visible');
           requestSubmitLabel.textContent = 'Send message';
           requestSubmitBtn.disabled = false;
+          const errBox = document.getElementById('requestFormError');
+          if (errBox) { errBox.style.display = 'none'; errBox.textContent = ''; }
         }, 300);
       }
     }
@@ -4251,14 +4437,41 @@
       }
     });
 
-    requestForm.addEventListener('submit', (e) => {
+    requestForm.addEventListener('submit', async (e) => {
       e.preventDefault();
+      const errBox = document.getElementById('requestFormError');
+      if (errBox) { errBox.style.display = 'none'; errBox.textContent = ''; }
       requestSubmitBtn.disabled = true;
       requestSubmitLabel.textContent = 'Sending…';
-      setTimeout(() => {
-        requestFormView.style.display = 'none';
-        requestSuccessView.classList.add('is-visible');
-      }, 450);
+
+      const formData = new FormData(requestForm);
+      const payload = Object.fromEntries(formData.entries());
+
+      try {
+        const res = await fetch('https://api.web3forms.com/submit', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+          body: JSON.stringify(payload)
+        });
+        const data = await res.json().catch(() => ({}));
+        if (res.ok && data.success) {
+          requestFormView.style.display = 'none';
+          requestSuccessView.classList.add('is-visible');
+          showToast('Message sent via Web3Forms!');
+        } else {
+          throw new Error(data.message || 'Submission failed. Please try again.');
+        }
+      } catch (err) {
+        if (errBox) {
+          errBox.textContent = (err && err.message ? err.message : 'Network error.') + ' You can also email rashtriya.73@gmail.com directly.';
+          errBox.style.display = 'block';
+        }
+        requestSubmitBtn.disabled = false;
+        requestSubmitLabel.textContent = 'Send message';
+      }
     });
 
     let toastTimer = null;
@@ -5015,6 +5228,135 @@
     }
 
     /* ========================================
+       COMPETITION-GRADE KINETIC MOTION & INTERACTIVE SHELL
+       ======================================== */
+    function initKineticUpgrades() {
+      // 1. Magnetic Pull on Pill Buttons (Desktop)
+      if (canHover && !reducedMotion) {
+        document.querySelectorAll('.pill-btn').forEach((btn) => {
+          btn.addEventListener('pointermove', (e) => {
+            const r = btn.getBoundingClientRect();
+            const dx = (e.clientX - (r.left + r.width / 2)) * 0.22;
+            const dy = (e.clientY - (r.top + r.height / 2)) * 0.22;
+            btn.style.transform = `translate3d(${dx.toFixed(1)}px, ${dy.toFixed(1)}px, 0)`;
+          });
+          btn.addEventListener('pointerleave', () => {
+            btn.style.transition = 'transform 0.4s cubic-bezier(0.22, 1, 0.36, 1)';
+            btn.style.transform = 'translate3d(0, 0, 0)';
+            setTimeout(() => { btn.style.transition = ''; }, 400);
+          });
+        });
+
+        // 2. Subtle 3D Tactile Tilt on Project Cards
+        document.querySelectorAll('.project-card').forEach((card) => {
+          card.addEventListener('pointermove', (e) => {
+            const r = card.getBoundingClientRect();
+            const rx = ((e.clientY - r.top) / r.height - 0.5) * -7;
+            const ry = ((e.clientX - r.left) / r.width - 0.5) * 7;
+            card.style.transform = `perspective(1000px) rotateX(${rx.toFixed(2)}deg) rotateY(${ry.toFixed(2)}deg) translateY(-6px)`;
+          });
+          card.addEventListener('pointerleave', () => {
+            card.style.transition = 'transform 0.5s cubic-bezier(0.22, 1, 0.36, 1)';
+            card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0px)';
+            setTimeout(() => { card.style.transition = ''; }, 500);
+          });
+        });
+      }
+
+      // 3. GSAP Scroll-Scrubbed Hero Watermark & CreateBand Glide
+      if (!reducedMotion && typeof window.gsap !== 'undefined' && typeof window.ScrollTrigger !== 'undefined') {
+        const { gsap, ScrollTrigger } = window;
+        gsap.registerPlugin(ScrollTrigger);
+
+        const heroWm = document.querySelector('.hero-watermark');
+        if (heroWm && window.innerWidth >= 1024) {
+          gsap.to(heroWm, {
+            y: -48,
+            letterSpacing: '0.02em',
+            ease: 'none',
+            scrollTrigger: { trigger: '#home', start: 'top top', end: 'bottom top', scrub: true }
+          });
+        }
+
+        const createList = document.querySelector('.create-list');
+        if (createList && window.innerWidth >= 768) {
+          gsap.fromTo(
+            '.create-item:nth-child(odd)',
+            { y: 20 },
+            { y: -16, ease: 'none', scrollTrigger: { trigger: createList, start: 'top bottom', end: 'bottom top', scrub: true } }
+          );
+          gsap.fromTo(
+            '.create-item:nth-child(even)',
+            { y: -16 },
+            { y: 20, ease: 'none', scrollTrigger: { trigger: createList, start: 'top bottom', end: 'bottom top', scrub: true } }
+          );
+        }
+      }
+
+      // 4. Interactive Theme-Matched Developer Shell
+      const out = document.getElementById('devShellOut');
+      const form = document.getElementById('devShellForm');
+      const input = document.getElementById('devShellInput');
+      if (!out || !form || !input) return;
+
+      const hist = [];
+      let hIdx = -1;
+      const cmds = ['help', 'projects', 'skills', 'metrics', 'journey', 'batman', 'sudo hire-me', 'clear'];
+
+      function log(txt, cls = 'ds-out') {
+        const d = document.createElement('div');
+        d.className = cls;
+        d.textContent = txt;
+        out.appendChild(d);
+        out.scrollTop = out.scrollHeight;
+      }
+
+      log('Rashtriya Gaurav Interactive Shell — B.Tech CSE @ GBU', 'ds-cmd');
+      log('Type "help" or click a chip below. Supports ↑/↓ history & Tab completion.');
+
+      function exec(raw) {
+        const cmd = raw.trim();
+        if (!cmd) return;
+        hist.unshift(cmd);
+        hIdx = -1;
+        log(`rashtriya@dev:~$ ${cmd}`, 'ds-cmd');
+        const c = cmd.toLowerCase();
+
+        if (c === 'help') {
+          log('Commands: help | projects | skills | metrics | journey | batman | sudo hire-me | clear');
+        } else if (c === 'projects') {
+          log('01. PromptLikho          -> https://www.rgverse.in/\n02. YouTube ThumbGrabber -> https://www.youtubethumbgrabber.xyz/\n03. stillframe. 4K       -> https://stillframe.youtubethumbgrabber.xyz/\n04. StudentCalc          -> https://www.studentcalc.online/\n05. Billion Dollar Idea  -> https://billiondollaridea.onrender.com/\n06. @booyahVerse7        -> https://www.youtube.com/@booyahVerse7');
+        } else if (c === 'skills') {
+          log('Frontend: HTML5, Tailwind CSS, JavaScript, React\nBackend:  Node.js, Express.js, REST APIs\nDatabase: MongoDB, PostgreSQL, Supabase\nGrowth:   SEO, Google Search Console, AdSense, YouTube Monetization');
+        } else if (c === 'metrics') {
+          log('GSC:      120K+ Impressions · Avg Position 8.6 · 428 Clicks\nGA4:      733 Daily Active Users · 865 Sessions · 65 Live/30m\nAdSense:  $59.69 Revenue · 26,388 Views · $3.68 US Page RPM', 'ds-ok');
+        } else if (c === 'journey') {
+          log('Class 9 (Java) -> Class 11 (Python + Web) -> Full-Stack -> SEO & Monetization -> B.Tech CSE @ GBU');
+        } else if (c === 'batman') {
+          log('Activating Gotham Bat-Signal... 🦇', 'ds-ok');
+          toggleBatSignal(true);
+        } else if (c === 'sudo hire-me') {
+          log('[sudo] verifying credentials... ACCESS GRANTED ✓', 'ds-ok');
+          setTimeout(() => openContactModal('Ran `sudo hire-me` in your interactive portfolio shell!'), 450);
+        } else if (c === 'clear') {
+          out.innerHTML = '';
+        } else {
+          log(`command not found: ${cmd} (try "help")`, 'ds-err');
+        }
+      }
+
+      form.addEventListener('submit', (e) => { e.preventDefault(); exec(input.value); input.value = ''; });
+      input.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowUp' && hIdx < hist.length - 1) { e.preventDefault(); hIdx++; input.value = hist[hIdx]; }
+        else if (e.key === 'ArrowDown') { e.preventDefault(); if (hIdx > 0) { hIdx--; input.value = hist[hIdx]; } else { hIdx = -1; input.value = ''; } }
+        else if (e.key === 'Tab') { e.preventDefault(); const m = cmds.find((k) => k.startsWith(input.value.trim().toLowerCase())); if (m) input.value = m; }
+      });
+      document.querySelectorAll('[data-ds-cmd]').forEach((chip) => {
+        chip.addEventListener('click', () => exec(chip.getAttribute('data-ds-cmd')));
+      });
+    }
+
+    /* ========================================
        BOOT
        ======================================== */
     initClock();
@@ -5029,6 +5371,7 @@
     initPageBackground();
     initBatSignal();
     initJourneyTimeline();
+    initKineticUpgrades();
     runLoader();
   </script>
 </body>
