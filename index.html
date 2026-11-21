@@ -4689,23 +4689,23 @@
     }
 
     /* ========================================
-       PC INTERACTIVE BACKGROUND (MAGNETIC DOTS + RIPPLES)
+       PC FLOWING SILK LIGHT-RIBBON BACKGROUND (NO CURSOR WEB)
        ======================================== */
     function initPageBackground() {
-      if (reducedMotion || !canHover || window.innerWidth < 1024) return;
+      if (reducedMotion || window.innerWidth < 1024) return;
       const canvas = document.getElementById('pageBgCanvas');
       if (!canvas) return;
       const ctx = canvas.getContext('2d');
 
-      let dpr = Math.min(window.devicePixelRatio || 1, 2);
+      let dpr = Math.min(window.devicePixelRatio || 1, 1.5);
       let w = 0, h = 0;
-      const spacing = 42;
-      let pointer = { x: -9999, y: -9999, active: false };
-      let smoothPtr = { x: -9999, y: -9999 };
-      const ripples = [];
+      let t = 0;
+      let smoothY = 0;
+      let pointer = { x: 0.5, y: 0.5 };
+      let smoothPtr = { x: 0.5, y: 0.5 };
 
       function resize() {
-        dpr = Math.min(window.devicePixelRatio || 1, 2);
+        dpr = Math.min(window.devicePixelRatio || 1, 1.5);
         w = window.innerWidth;
         h = window.innerHeight;
         canvas.width = Math.round(w * dpr);
@@ -4716,119 +4716,87 @@
       window.addEventListener('resize', resize);
 
       window.addEventListener('pointermove', (e) => {
-        pointer.x = e.clientX;
-        pointer.y = e.clientY;
-        if (!pointer.active) {
-          smoothPtr.x = e.clientX;
-          smoothPtr.y = e.clientY;
-          pointer.active = true;
+        if (w > 0 && h > 0) {
+          pointer.x = e.clientX / w;
+          pointer.y = e.clientY / h;
         }
-      });
+      }, { passive: true });
 
-      window.addEventListener('pointerleave', () => {
-        pointer.active = false;
-      });
+      function drawRibbon(phase, widthFactor, xBase, amp, colors, alpha) {
+        ctx.save();
+        ctx.globalAlpha = alpha;
+        ctx.lineCap = 'round';
+        ctx.lineJoin = 'round';
 
-      window.addEventListener('pointerdown', (e) => {
-        if (window.innerWidth < 1024) return;
-        ripples.push({ x: e.clientX, y: e.clientY, r: 8, maxR: 220, alpha: 0.36 });
-      });
+        const scrollShift = smoothY * 0.00045;
+        const ptrShiftX = (smoothPtr.x - 0.5) * 70;
+        const ptrShiftY = (smoothPtr.y - 0.5) * 40;
+
+        const grad = ctx.createLinearGradient(0, 0, w, h);
+        grad.addColorStop(0, colors[0]);
+        grad.addColorStop(0.5, colors[1]);
+        grad.addColorStop(1, colors[2]);
+
+        ctx.strokeStyle = grad;
+        ctx.lineWidth = Math.min(w, h) * widthFactor;
+        ctx.filter = 'blur(42px)';
+
+        ctx.beginPath();
+        const steps = 14;
+        for (let i = 0; i <= steps; i++) {
+          const p = i / steps;
+          const y = -h * 0.15 + p * h * 1.3 + ptrShiftY * (0.4 + p * 0.4);
+          const wave1 = Math.sin(p * 3.1 + t * 0.55 + phase + scrollShift) * amp;
+          const wave2 = Math.cos(p * 1.9 - t * 0.35 + phase * 1.4) * (amp * 0.45);
+          const x = w * xBase + wave1 + wave2 + ptrShiftX * (0.5 + p * 0.3);
+          if (i === 0) ctx.moveTo(x, y);
+          else ctx.lineTo(x, y);
+        }
+        ctx.stroke();
+        ctx.restore();
+      }
 
       function tick() {
         if (window.innerWidth < 1024) {
           requestAnimationFrame(tick);
           return;
         }
+        t += 0.012;
+        smoothY += (window.scrollY - smoothY) * 0.08;
+        smoothPtr.x += (pointer.x - smoothPtr.x) * 0.05;
+        smoothPtr.y += (pointer.y - smoothPtr.y) * 0.05;
+
         ctx.clearRect(0, 0, w, h);
 
-        if (pointer.active) {
-          smoothPtr.x += (pointer.x - smoothPtr.x) * 0.16;
-          smoothPtr.y += (pointer.y - smoothPtr.y) * 0.16;
+        // Primary sweeping burnt-orange / warm apricot silk ribbon
+        drawRibbon(
+          0.0,
+          0.34,
+          0.62,
+          w * 0.16,
+          ['rgba(177, 95, 44, 0.42)', 'rgba(235, 174, 124, 0.55)', 'rgba(247, 212, 182, 0.38)'],
+          0.75
+        );
 
-          // Soft warm apricot ambient glow following cursor
-          const glow = ctx.createRadialGradient(smoothPtr.x, smoothPtr.y, 0, smoothPtr.x, smoothPtr.y, 260);
-          glow.addColorStop(0, 'rgba(235, 174, 124, 0.14)');
-          glow.addColorStop(0.55, 'rgba(207, 128, 71, 0.045)');
-          glow.addColorStop(1, 'rgba(207, 128, 71, 0)');
-          ctx.fillStyle = glow;
-          ctx.fillRect(0, 0, w, h);
-        }
+        // Secondary opposing sculptural sunlit ribbon
+        drawRibbon(
+          2.2,
+          0.24,
+          0.22,
+          w * 0.13,
+          ['rgba(247, 212, 182, 0.45)', 'rgba(207, 128, 71, 0.36)', 'rgba(177, 95, 44, 0.28)'],
+          0.62
+        );
 
-        // Scroll parallax offset for subtle depth
-        const scrollOffsetY = -(window.scrollY * 0.18) % spacing;
-        const radius = 175;
-        const nearPts = [];
-
-        for (let gx = spacing * 0.5; gx < w + spacing; gx += spacing) {
-          for (let gy = scrollOffsetY; gy < h + spacing; gy += spacing) {
-            let x = gx;
-            let y = gy;
-            let influence = 0;
-
-            if (pointer.active) {
-              const dx = x - smoothPtr.x;
-              const dy = y - smoothPtr.y;
-              const dist = Math.hypot(dx, dy);
-              if (dist < radius && dist > 0.1) {
-                influence = 1 - dist / radius;
-                const push = influence * influence * 14;
-                x += (dx / dist) * push;
-                y += (dy / dist) * push;
-                if (dist < 125) nearPts.push({ x, y, influence });
-              }
-            }
-
-            // Ripple displacement
-            for (let i = 0; i < ripples.length; i++) {
-              const rp = ripples[i];
-              const dx = x - rp.x, dy = y - rp.y;
-              const dist = Math.hypot(dx, dy);
-              const band = Math.abs(dist - rp.r);
-              if (band < 28 && dist > 0.1) {
-                const wave = (1 - band / 28) * rp.alpha * 18;
-                x += (dx / dist) * wave;
-                y += (dy / dist) * wave;
-                influence = Math.max(influence, (1 - band / 28) * rp.alpha * 1.4);
-              }
-            }
-
-            const dotR = 1.15 + influence * 1.65;
-            if (influence > 0.06) {
-              ctx.fillStyle = `rgba(177, 95, 44, ${(0.12 + influence * 0.55).toFixed(3)})`;
-            } else {
-              ctx.fillStyle = 'rgba(17, 17, 17, 0.085)';
-            }
-            ctx.beginPath();
-            ctx.arc(x, y, dotR, 0, Math.PI * 2);
-            ctx.fill();
-          }
-        }
-
-        // Subtle connecting hairline threads near cursor
-        if (pointer.active && nearPts.length) {
-          ctx.lineWidth = 0.75;
-          for (let i = 0; i < nearPts.length; i++) {
-            const pt = nearPts[i];
-            ctx.strokeStyle = `rgba(177, 95, 44, ${(pt.influence * 0.22).toFixed(3)})`;
-            ctx.beginPath();
-            ctx.moveTo(smoothPtr.x, smoothPtr.y);
-            ctx.lineTo(pt.x, pt.y);
-            ctx.stroke();
-          }
-        }
-
-        // Draw & decay click ripples
-        for (let i = ripples.length - 1; i >= 0; i--) {
-          const rp = ripples[i];
-          rp.r += 5.5;
-          rp.alpha *= 0.945;
-          ctx.strokeStyle = `rgba(177, 95, 44, ${rp.alpha.toFixed(3)})`;
-          ctx.lineWidth = 1.1;
-          ctx.beginPath();
-          ctx.arc(rp.x, rp.y, rp.r, 0, Math.PI * 2);
-          ctx.stroke();
-          if (rp.r > rp.maxR || rp.alpha < 0.015) ripples.splice(i, 1);
-        }
+        // Soft highlight ribbon gliding through center
+        drawRibbon(
+          4.1,
+          0.16,
+          0.48,
+          w * 0.2,
+          ['rgba(255, 240, 224, 0.55)', 'rgba(235, 174, 124, 0.42)', 'rgba(207, 128, 71, 0.25)'],
+          0.55
+        );
 
         requestAnimationFrame(tick);
       }
